@@ -1,0 +1,26 @@
+name: tofu
+
+on:
+  pull_request:
+    # TODO
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: 0 19 * * 2
+
+jobs:
+  tofu:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tofu
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: opentofu/setup-terraform@v1
+        with:
+      - run: tofu fmt -recursive -diff
+      - run: tofu init
+      - run: tofu validate

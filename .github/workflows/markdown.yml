@@ -1,0 +1,20 @@
+name: markdown
+
+on:
+  pull_request:
+    # TODO
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: 0 19 * * 2
+
+jobs:
+  markdown:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: hartmantis/github-action-cspell@v1
+      - uses: hartmantis/github-action-write-good@v1
