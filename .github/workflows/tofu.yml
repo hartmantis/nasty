@@ -19,8 +19,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - uses: opentofu/setup-terraform@v1
-        with:
+      - uses: opentofu/setup-opentofu@v1
       - run: tofu fmt -recursive -diff
       - run: tofu init
       - run: tofu validate
