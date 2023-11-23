@@ -15,7 +15,7 @@ jobs:
         id: pinned_nixpkgs
         run: echo "::set-output name=url::$(cat ./pinned/nixpkgs)"
       - name: "Install Nix"
-        uses: cachix-install-nix-action@v23
+        uses: cachix/install-nix-action@v23
         with:
           nix_path: "nixpkgs=${{ steps.pinned_nixpkgs.outputs.url }}"
       - name: "Install NixOS generators"
