@@ -1,0 +1,24 @@
+name: nixos
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: nixos
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Get pinned nixpkgs"
+        id: pinned_nixpkgs
+        run: echo "::set-output name=url::$(cat ./pinned/nixpkgs)"
+      - name: "Install Nix"
+        uses: cachix-install-nix-action@v23
+        with:
+          nix_path: "nixpkgs=$\{\{ steps.pinned_nixpkgs.outputs.url \}}"
+      - name: "Install NixOS generators"
+        run: nix-shell -p nixos-generators
+      - name: "Builx NixOS image"
+        run: nixos-generate -f iso

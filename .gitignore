@@ -42,3 +42,5 @@ tf/tofu.rc
 tf/.terraform.lock.hcl
 # Assume OpenTofu will be changing the names at some point
 tf/.tofu.lock.hcl
+
+**/.*.swp
