@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: tofu
+        working-directory: tf
     steps:
       - uses: actions/checkout@v4
         with:
