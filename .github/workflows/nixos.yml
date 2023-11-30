@@ -18,4 +18,4 @@ jobs:
       - name: "Install NixOS generators"
         run: nix-shell -p nixos-generators
       - name: "Builx NixOS image"
-        run: nixos-generate -f iso
+        run: nix-shell --command './nixos-generate -f iso'
