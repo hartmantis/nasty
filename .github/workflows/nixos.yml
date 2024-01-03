@@ -16,7 +16,7 @@ jobs:
           nix_path: nixpkgs=channel:nixos-23.05
       - name: Build NixOS image
         id: build-nixos-image
-        run: nix-shell -p nixos-generators --run "nixos-generate -f iso -c ${{ github.workspace }}nixos/configuration.nix -o result"
+        run: nix-shell -p nixos-generators --run "nixos-generate -f iso -c ${{ github.workspace }}/nixos/configuration.nix -o result"
       - uses: ncipollo/release-action@v1
         with:
           artifacts: result
