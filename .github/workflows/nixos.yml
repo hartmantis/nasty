@@ -15,7 +15,5 @@ jobs:
         uses: cachix/install-nix-action@v23
         with:
           nix_path: nixpkgs=channel:nixos-23.05
-      - name: "Install NixOS generators"
-        run: nix-shell -p nixos-generators
-      - name: "Builx NixOS image"
-        run: nix-shell --command './nixos-generate -f iso'
+      - name: "Build NixOS image"
+        run: nix-shell -p nixos-generators --run "nixos-generate --format iso -o result"
