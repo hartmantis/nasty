@@ -11,9 +11,12 @@ jobs:
         working-directory: nixos
     steps:
       - uses: actions/checkout@v4
-      - name: "Install Nix"
-        uses: cachix/install-nix-action@v23
+      - uses: cachix/install-nix-action@v23
         with:
           nix_path: nixpkgs=channel:nixos-23.05
-      - name: "Build NixOS image"
-        run: nix-shell -p nixos-generators --run "nixos-generate --format iso -o result"
+      - name: Build NixOS image
+        id: build-nixos-image
+        run: nix-shell -p nixos-generators --run "nixos-generate -f iso -c nixos/configuration.nix -o result"
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: result
