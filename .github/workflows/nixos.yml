@@ -16,7 +16,12 @@ jobs:
           nix_path: nixpkgs=channel:nixos-23.05
       - name: Build NixOS image
         id: build-nixos-image
-        run: nix-shell -p nixos-generators --run "nixos-generate -f iso -c ${{ github.workspace }}/nixos/configuration.nix -o result"
+        run: |
+          nix-shell -p nixos-generators --run "nixos-generate -f iso -c ${{ github.workspace }}/nixos/configuration.nix -o result"
+          echo "artifact_build_time=$(date -Iseconds)" >> $GITHUB_OUTPUT
+          echo "artifact_digest=$(readlink result | cut -d '/' -f 4 | cut -d '-' -f 1)" >> $GITHUB_OUTPUT
+          echo "artifact_path=$(readlink result)" >> $GITHUB_OUTPUT
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: result
+          artifacts: "${{ steps.build-nixos-image.artifact_path }}"
+          tag: "${{ steps.build-nixos-image.outputs.artifact_build_time }}-${{ steps.build-nixos-image.outputs.artifact_digest }}"
