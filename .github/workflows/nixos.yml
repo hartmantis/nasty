@@ -20,7 +20,7 @@ jobs:
         id: build-nixos-image
         run: |
           nix-shell -p nixos-generators --run "nixos-generate -f iso -c ${{ github.workspace }}/nixos/configuration.nix -o result"
-          echo "artifact_build_time=$(date -u +\"%Y-%m-%dT%H_%M_%S\")" >> $GITHUB_OUTPUT
+          echo "artifact_build_time=$(date -u +%Y-%m-%dT%H_%M_%S)" >> $GITHUB_OUTPUT
           echo "artifact_digest=$(readlink result | cut -d '/' -f 4 | cut -d '-' -f 1)" >> $GITHUB_OUTPUT
           echo "artifact_path=$(readlink result)" >> $GITHUB_OUTPUT
       - uses: ncipollo/release-action@v1
