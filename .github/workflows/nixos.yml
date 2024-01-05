@@ -29,4 +29,4 @@ jobs:
           #tag: "${{ steps.build-nixos-image.outputs.artifact_build_time }}-${{ steps.build-nixos-image.outputs.artifact_digest }}"
           tag: "${{ steps.build-nixos-image.outputs.artifact_digest }}"
           commit: main
-          artifacts: "${{ steps.build-nixos-image.artifact_path }}"
+          artifacts: "${{ steps.build-nixos-image.outputs.artifact_path }}"
