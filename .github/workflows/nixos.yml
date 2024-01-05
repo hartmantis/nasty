@@ -25,5 +25,7 @@ jobs:
           echo "artifact_path=$(readlink result)" >> $GITHUB_OUTPUT
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "${{ steps.build-nixos-image.artifact_path }}"
+          artifactErrorsFailBuild: true
           tag: "${{ steps.build-nixos-image.outputs.artifact_build_time }}-${{ steps.build-nixos-image.outputs.artifact_digest }}"
+          commit: main
+          artifacts: "${{ steps.build-nixos-image.artifact_path }}"
