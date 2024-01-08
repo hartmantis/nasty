@@ -1,6 +1,9 @@
 {config, pkgs, ...}:
 
 {
+  networking.hostName = "missjackson";
+  networking.domain = "nasty.monster"
+
   users.mutableUsers = false;
 
   users.users.cheese = {
