@@ -25,7 +25,12 @@
   security.sudo.extraRules = [
     {
       users = [ "cheese" ];
-      options = [ "NOPASSWD" ];
+      commands = [
+        {
+          command = "ALL";
+          options = [ "NOPASSWD" ];
+        }
+      ]
     }
   ];
 
