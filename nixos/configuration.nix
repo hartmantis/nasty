@@ -4,7 +4,7 @@
   networking.hostName = "missjackson";
   networking.domain = "nasty.monster"
 
-  networking.interfaces.eth0.ipv4.addresses = [
+  networking.interfaces.eno1.ipv4.addresses = [
     {
       address = "192.168.0.69";
       prefixLength = 24;
@@ -21,6 +21,13 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICWJKtUplJ5KOY7a0Zrl/EswQDLwCpVTt7zI+5zlu9jp nasty"
     ];
   };
+
+  security.sudo.extraRules = [
+    {
+      users = [ "cheese" ];
+      options = [ "NOPASSWD" ];
+    }
+  ];
 
   environment.systemPackages = [
     pkgs.jellyfin
