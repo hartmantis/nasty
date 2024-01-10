@@ -30,7 +30,7 @@
           command = "ALL";
           options = [ "NOPASSWD" ];
         }
-      ]
+      ];
     }
   ];
 
