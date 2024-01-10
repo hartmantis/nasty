@@ -2,7 +2,7 @@
 
 {
   networking.hostName = "missjackson";
-  networking.domain = "nasty.monster"
+  networking.domain = "nasty.monster";
 
   networking.interfaces.eno1.ipv4.addresses = [
     {
