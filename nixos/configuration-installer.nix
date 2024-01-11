@@ -3,5 +3,5 @@
 {
   imports = [
     "./configuration-shared.nix"
-  ]
+  ];
 }
