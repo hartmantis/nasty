@@ -1,15 +1,15 @@
 {config, pkgs, ...}:
 
 {
-  networking.hostName = "missjackson";
-  networking.domain = "nasty.monster";
+  imports = [
+    "./shared-configuration.nix"
+  ]
 
-  networking.interfaces.eno1.ipv4.addresses = [
-    {
-      address = "192.168.0.69";
-      prefixLength = 24;
-    }
-  ];
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false;
+    settings.KbdInteractiveAuthentication = false;
+  };
 
   users.mutableUsers = false;
 
@@ -39,10 +39,4 @@
     pkgs.jellyfin-web
     pkgs.jellyfin-ffmpeg
   ];
-
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = false;
-    settings.KbdInteractiveAuthentication = false;
-  };
 }
