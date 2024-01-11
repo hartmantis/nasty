@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    environment: nixos-builder
     defaults:
       run:
         working-directory: nixos
@@ -18,8 +19,11 @@ jobs:
           nix_path: nixpkgs=channel:nixos-23.05
       - name: Build NixOS image
         id: build-nixos-image
+        env:
+          NIXOS_HOSTNAME: ${{ vars.nixos_hostname }}
+          NIXOS_DOMAIN: ${{ vars.nixos_domain }}
         run: |
-          NIXOS_HOSTNAME="missjackson" NIXOS_DOMAIN="nasty.monster" nix-shell -p nixos-generators --run "nixos-generate -f iso -c ${{ github.workspace }}/nixos/configuration-installer.nix -o result"
+          nix-shell -p nixos-generators --run "nixos-generate -f iso -c ${{ github.workspace }}/nixos/configuration-installer.nix -o result"
           echo "artifact_build_time=$(date -u +%Y-%m-%dT%H_%M_%S)" >> $GITHUB_OUTPUT
           echo "artifact_digest=$(readlink result | cut -d '/' -f 4 | cut -d '-' -f 1)" >> $GITHUB_OUTPUT
           echo "artifact_path=$(readlink result)" >> $GITHUB_OUTPUT
