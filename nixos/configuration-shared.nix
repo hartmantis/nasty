@@ -1,8 +1,8 @@
 {config, pkgs, ...}:
 
 {
-  networking.hostName = "missjackson";
-  networking.domain = "nasty.monster";
+  networking.hostName = builtins.getEnv "NIXOS_HOSTNAME";
+  networking.domain = builtins.getEnv "NIXOS_DOMAIN";
 
   networking.interfaces.eno1.ipv4.addresses = [
     {
