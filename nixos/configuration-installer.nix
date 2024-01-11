@@ -2,6 +2,6 @@
 
 {
   imports = [
-    "./configuration-shared.nix"
+    ./configuration-shared.nix
   ];
 }
