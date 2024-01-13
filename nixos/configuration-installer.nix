@@ -37,4 +37,5 @@ in {
       mount /dev/disk/by-label/boot /mnt/boot
       nixos-generate-config --root /mnt
     '';
+  }
 }
