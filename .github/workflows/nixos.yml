@@ -20,6 +20,7 @@ jobs:
       - name: Build NixOS image
         id: build-nixos-image
         env:
+          NIXOS_ROOT_DEVICE: ${{ vars.nixos_root_device }}
           NIXOS_HOSTNAME: ${{ vars.nixos_hostname }}
           NIXOS_DOMAIN: ${{ vars.nixos_domain }}
         run: |
