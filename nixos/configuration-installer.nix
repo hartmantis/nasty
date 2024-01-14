@@ -23,7 +23,7 @@ in {
     script = ''
       set -euxo pipefail
 
-      wipefs -fa ${rootDevice}}
+      wipefs -fa /dev/${rootDevice}}
 
       parted /dev/${rootDevice} -- mklabel gpt
       parted /dev/${rootDevice} -- mkpart root ext4 512MB -8GB
