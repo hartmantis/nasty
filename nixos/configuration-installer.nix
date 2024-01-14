@@ -14,7 +14,7 @@ in {
     description = "NixOS installer";
     wantedBy = [ "multi-user.target" ];
     after = [ "getty.target" "ncsd.service" ];
-    path = [ "/run/current-system/sw/bin" ];
+    path = [ "/run/current-system/sw" ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = "yes";
