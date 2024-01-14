@@ -14,6 +14,7 @@ in {
     description = "NixOS installer";
     wantedBy = [ "multi-user.target" ];
     after = [ "getty.target" "ncsd.service" ];
+    path = [ "/run/current-system/sw/bin" ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = "yes";
@@ -30,10 +31,10 @@ in {
       parted /dev/${rootDevice} -- mkpart ESP fat32 1MB 512MB
       parted /dev/${rootDevice} -- set 3 esp on
 
-      mkfs.ext4 -L nixos /dev/${rootDevice}1
-      mkswap -L swap /dev/${rootDevice}2
-      swapon /dev/${rootDevice}2
-      mkfs.fat -F 32 -n boot /dev/${rootDevice}3
+      mkfs.ext4 -L nixos /dev/${rootDevice}p1
+      mkswap -L swap /dev/${rootDevice}p2
+      swapon /dev/${rootDevice}p2
+      mkfs.fat -F 32 -n boot /dev/${rootDevice}p3
       mount /dev/disk/by-label/nixos /mnt
       mkdir -p /mnt/boot
       mount /dev/disk/by-label/boot /mnt/boot
