@@ -5,6 +5,8 @@ in {
     ./configuration-shared.nix
   ];
 
+  services.getty.autologinUser = "root";
+
   # Automate the installation via a run-once systemd service on the installer
   # image. Adapted from
   # https://github.com/tfc/nixos-offline-installer/blob/master/installer-configuration.nix

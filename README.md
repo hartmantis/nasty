@@ -23,8 +23,6 @@ Code to build a custom NixOS installer ISO that, when used to boot a system,
 *will destroy all root drive data* and reprovision it with a fresh NixOS
 install plus any NAS-specific goodies I choose to add.
 
-Building 
-
 ### /tf
 
 OpenTofu/Terraform components; right now just DNS records.
