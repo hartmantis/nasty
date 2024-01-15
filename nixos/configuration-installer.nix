@@ -7,6 +7,10 @@ in {
 
   services.getty.autologinUser = "root";
 
+  # The NixOS install docs recommend using parted but it doesn't come with the
+  # installer. Could use sfdisk but parted feels cleaner to me.
+  environment.systemPackages = with pkgs; [ parted ];
+
   # Automate the installation via a run-once systemd service on the installer
   # image. Adapted from
   # https://github.com/tfc/nixos-offline-installer/blob/master/installer-configuration.nix
