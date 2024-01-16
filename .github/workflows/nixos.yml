@@ -33,4 +33,4 @@ jobs:
           artifactErrorsFailBuild: true
           tag: "${{ steps.build-nixos-image.outputs.artifact_build_time }}-${{ steps.build-nixos-image.outputs.artifact_digest }}"
           commit: main
-          artifacts: "${{ steps.build-nixos-image.outputs.artifact_path }}/iso/nixos.iso"
+          artifacts: "${{ steps.build-nixos-image.outputs.artifact_path }}/iso/nixos-*.iso"
