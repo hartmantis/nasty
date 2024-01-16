@@ -5,12 +5,6 @@ in {
     ./configuration-shared.nix
   ];
 
-  services.getty.autologinUser = "root";
-
-  # The NixOS install docs recommend using parted but it doesn't come with the
-  # installer. Could use sfdisk but parted feels cleaner to me.
-  environment.systemPackages = with pkgs; [ parted ];
-
   # Automate the installation via a run-once systemd service on the installer
   # image. Adapted from
   # https://github.com/tfc/nixos-offline-installer/blob/master/installer-configuration.nix
@@ -39,6 +33,7 @@ in {
       mkswap -L swap /dev/${rootDevice}p2
       swapon /dev/${rootDevice}p2
       mkfs.fat -F 32 -n boot /dev/${rootDevice}p3
+      mkdir -p /mnt
       mount /dev/disk/by-label/nixos /mnt
       mkdir -p /mnt/boot
       mount /dev/disk/by-label/boot /mnt/boot
