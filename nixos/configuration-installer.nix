@@ -1,4 +1,4 @@
-{config, pkgs, ...}: let
+{config, lib, pkgs, ...}: let
   rootDevice = builtins.getEnv "NIXOS_ROOT_DEVICE";
 in {
   imports = [
