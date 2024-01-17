@@ -5,7 +5,7 @@ in {
   imports = [
     ./hardware-configuration.nix
     ./base-configuration.nix
-  ]
+  ];
 
   # Copy of what ends up in a default configuration.nix.
   boot.loader.systemd-boot.enable = true;
@@ -42,6 +42,8 @@ in {
   ];
 
   environment.systemPackages = with pkgs; [
+    vim
+    grafana-agent
     jellyfin
     jellyfin-web
     jellyfin-ffmpeg
