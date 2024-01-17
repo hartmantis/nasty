@@ -23,7 +23,8 @@ in {
     after = [ "getty.target" "ncsd.service" ];
     path = [ "/run/current-system/sw" ];
     environment = config.nix.envVars // {
-      inherit (config.environment.sessionVariables) NIX_PATH NIXOS_VERSION NIXOS_HOSTNAME NIXOS_DOMAIN NIXOS_ADMIN_USER NIXOS_ADMIN_SSH_PUBLIC_KEY;
+      inherit (config.environment.sessionVariables) NIX_PATH;
+      inherit (config.environment.variables) NIXOS_VERSION NIXOS_HOSTNAME NIXOS_DOMAIN NIXOS_ADMIN_USER NIXOS_ADMIN_SSH_PUBLIC_KEY;
       HOME = "/root";
     };
     serviceConfig = {
