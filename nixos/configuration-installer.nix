@@ -1,26 +1,31 @@
 {config, pkgs, ...}: let
   rootDevice = builtins.getEnv "NIXOS_ROOT_DEVICE";
+  svcName = "nixos-installer";
 in {
   imports = [
     ./configuration-shared.nix
   ];
 
-  environment.etc."nixos-installer/configuration-shared.nix" = {
+  environment.etc."${svcName}/configuration-shared.nix" = {
     source = ./configuration-shared.nix;
   };
 
-  environment.etc."nixos-installer/configuration-system.nix" = {
+  environment.etc."${svcName}/configuration-system.nix" = {
     source = ./configuration-system.nix;
   };
 
   # Automate the installation via a run-once systemd service on the installer
   # image. Adapted from
   # https://github.com/tfc/nixos-offline-installer/blob/master/installer-configuration.nix
-  systemd.services.nixos-installer = {
+  systemd.services."${svcName}" = {
     description = "NixOS installer";
     wantedBy = [ "multi-user.target" ];
     after = [ "getty.target" "ncsd.service" ];
     path = [ "/run/current-system/sw" ];
+    environment = config.nix.envVars // {
+      inherit (config.environment.sessionVariables) NIX_PATH;
+      HOME = "/root";
+    };
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = "yes";
@@ -46,8 +51,8 @@ in {
       mkdir -p /mnt/boot
       mount /dev/disk/by-label/boot /mnt/boot
       nixos-generate-config --root /mnt
-      cp ${config.environment.etc."nixos-installer/configuration-shared.nix".source} /mnt/etc/nixos/
-      cp ${config.environment.etc."nixos-installer/configuration-system.nix".source} /mnt/etc/nixos/
+      cp /etc/${config.environment.etc."${svcName}/configuration-shared.nix".target} /mnt/etc/nixos/
+      cp /etc/${config.environment.etc."${svcName}/configuration-system.nix".target} /mnt/etc/nixos/
 
       nixos-install --no-root-passwd
     '';
