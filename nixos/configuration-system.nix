@@ -1,6 +1,7 @@
-{config, pkgs, ...}:
-
-{
+{config, pkgs, ...}: let
+  adminUser = builtins.getEnv "NIXOS_ADMIN_USER";
+  adminSshPublicKey = builtins.getEnv "NIXOS_ADMIN_SSH_PUBLIC_KEY";
+in {
   imports = [
     "./shared-configuration.nix"
   ]
@@ -17,14 +18,12 @@
     isNormalUser = true;
     description = "It's me";
     extraGroups = ["wheel"];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICWJKtUplJ5KOY7a0Zrl/EswQDLwCpVTt7zI+5zlu9jp nasty"
-    ];
+    openssh.authorizedKeys.keys = [ adminSshPublicKey ];
   };
 
   security.sudo.extraRules = [
     {
-      users = [ "cheese" ];
+      users = [ adminUser ];
       commands = [
         {
           command = "ALL";

@@ -23,6 +23,8 @@ jobs:
           NIXOS_ROOT_DEVICE: ${{ vars.nixos_root_device }}
           NIXOS_HOSTNAME: ${{ vars.nixos_hostname }}
           NIXOS_DOMAIN: ${{ vars.nixos_domain }}
+          NIXOS_ADMIN_USER: ${{ vars.nixos_admin_user }}
+          NIXOS_ADMIN_SSH_PUBLIC_KEY: ${{ vars.nixos_admin_ssh_public_key }}
         run: |
           nix-shell -p nixos-generators --run "nixos-generate -f install-iso -c ${{ github.workspace }}/nixos/configuration-installer.nix -o result"
           echo "artifact_build_time=$(date -u +%Y-%m-%dT%H_%M_%S)" >> $GITHUB_OUTPUT
