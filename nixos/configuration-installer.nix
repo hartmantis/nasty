@@ -50,11 +50,13 @@ in {
       mount /dev/disk/by-label/nixos /mnt
       mkdir -p /mnt/boot
       mount /dev/disk/by-label/boot /mnt/boot
+      # Use the generated hardware-configuration.nix.
       nixos-generate-config --root /mnt
-      cp /etc/${config.environment.etc."${svcName}/configuration-shared.nix".target} /mnt/etc/nixos/
-      cp /etc/${config.environment.etc."${svcName}/configuration-system.nix".target} /mnt/etc/nixos/
+      cp /etc/${config.environment.etc."${svcName}/configuration-shared.nix".target} /mnt/etc/nixos/base-configuration.nix
+      cp /etc/${config.environment.etc."${svcName}/configuration-system.nix".target} /mnt/etc/nixos/configuration.nix
 
       nixos-install --no-root-passwd
+      reboot
     '';
   };
 }

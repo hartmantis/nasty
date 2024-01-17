@@ -3,8 +3,16 @@
   adminSshPublicKey = builtins.getEnv "NIXOS_ADMIN_SSH_PUBLIC_KEY";
 in {
   imports = [
-    "./shared-configuration.nix"
+    ./hardware-configuration.nix
+    ./base-configuration.nix
   ]
+
+  # Copy of what ends up in a default configuration.nix.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  # /Copy
+
+  time.timeZone = "Etc/UTC";
 
   services.openssh = {
     enable = true;
