@@ -7,6 +7,8 @@ in {
     ./base-configuration.nix
   ];
 
+  system.stateVersion = builtins.getEnv "NIXOS_VERSION";
+
   # Copy of what ends up in a default configuration.nix.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
