@@ -46,8 +46,8 @@ in {
       mkdir -p /mnt/boot
       mount /dev/disk/by-label/boot /mnt/boot
       nixos-generate-config --root /mnt
-      cp ${config.environment.etc."nixos-installer/configuration-shared.nix".target} /mnt/etc/nixos/
-      cp ${config.environment.etc."nixos-installer/configuration-system.nix".target} /mnt/etc/nixos/
+      cp ${config.environment.etc."nixos-installer/configuration-shared.nix"} /mnt/etc/nixos/
+      cp ${config.environment.etc."nixos-installer/configuration-system.nix"} /mnt/etc/nixos/
 
       nixos-install --no-root-passwd
     '';
