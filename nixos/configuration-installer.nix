@@ -5,6 +5,14 @@ in {
     ./configuration-shared.nix
   ];
 
+  environment.etc."nixos-installer/configuration-shared.nix" = {
+    source = ./configuration-shared.nix;
+  };
+
+  environment.etc."nixos-installer/configuration-system.nix" = {
+    source = ./configuration-system.nix;
+  };
+
   # Automate the installation via a run-once systemd service on the installer
   # image. Adapted from
   # https://github.com/tfc/nixos-offline-installer/blob/master/installer-configuration.nix
@@ -38,6 +46,10 @@ in {
       mkdir -p /mnt/boot
       mount /dev/disk/by-label/boot /mnt/boot
       nixos-generate-config --root /mnt
+      cp ${environment.etc."nixos-installer/configuration-shared.nix".target} /mnt/etc/nixos/
+      cp ${environment.etc."nixos-installer/configuration-system.nix".target} /mnt/etc/nixos/
+
+      nixos-install --no-root-passwd
     '';
   };
 }
