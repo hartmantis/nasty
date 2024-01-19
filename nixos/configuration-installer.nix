@@ -64,18 +64,18 @@ in {
     script = ''
       set -euxo pipefail
 
-      wipefs -fa /dev/${variable.rootDevice}
+      wipefs -fa /dev/${variables.rootDevice}
 
-      parted /dev/${variable.rootDevice} -- mklabel gpt
-      parted /dev/${variable.rootDevice} -- mkpart root ext4 512MB -8GB
-      parted /dev/${variable.rootDevice} -- mkpart swap linux-swap -8GB 100%
-      parted /dev/${variable.rootDevice} -- mkpart ESP fat32 1MB 512MB
-      parted /dev/${variable.rootDevice} -- set 3 esp on
+      parted /dev/${variables.rootDevice} -- mklabel gpt
+      parted /dev/${variables.rootDevice} -- mkpart root ext4 512MB -8GB
+      parted /dev/${variables.rootDevice} -- mkpart swap linux-swap -8GB 100%
+      parted /dev/${variables.rootDevice} -- mkpart ESP fat32 1MB 512MB
+      parted /dev/${variables.rootDevice} -- set 3 esp on
 
-      mkfs.ext4 -L nixos /dev/${variable.rootDevice}p1
-      mkswap -L swap /dev/${variable.rootDevice}p2
-      swapon /dev/${variable.rootDevice}p2
-      mkfs.fat -F 32 -n boot /dev/${variable.rootDevice}p3
+      mkfs.ext4 -L nixos /dev/${variables.rootDevice}p1
+      mkswap -L swap /dev/${variables.rootDevice}p2
+      swapon /dev/${variables.rootDevice}p2
+      mkfs.fat -F 32 -n boot /dev/${variables.rootDevice}p3
       mkdir -p /mnt
       mount /dev/disk/by-label/nixos /mnt
       mkdir -p /mnt/boot
