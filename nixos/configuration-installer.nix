@@ -4,7 +4,7 @@
     rootDevice = builtins.getEnv "NIXOS_ROOT_DEVICE";
     hostName = builtins.getEnv "NIXOS_HOSTNAME";
     domain = builtins.getEnv "NIXOS_DOMAIN";
-    ip = builtings.getEnv "NIXOS_IP_ADDRESS";
+    ip = builtins.getEnv "NIXOS_IP_ADDRESS";
     defaultGateway = builtins.getEnv "NIXOS_DEFAULT_GATEWAY";
     dns = builtins.getEnv "NIXOS_DNS";
     adminUser = builtins.getEnv "NIXOS_ADMIN_USER";
