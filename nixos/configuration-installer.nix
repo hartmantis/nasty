@@ -1,16 +1,46 @@
 {config, pkgs, ...}: let
-  rootDevice = builtins.getEnv "NIXOS_ROOT_DEVICE";
-  svcName = "nixos-installer";
-in {
-  imports = [
-    ./configuration-shared.nix
-  ];
-
-  environment.etc."${svcName}/configuration-shared.nix" = {
-    source = ./configuration-shared.nix;
+  variables = {
+    nixosVersion = builtins.getEnv "NIXOS_VERSION";
+    rootDevice = builtins.getEnv "NIXOS_ROOT_DEVICE";
+    hostName = builtins.getEnv "NIXOS_HOSTNAME";
+    domain = builtins.getEnv "NIXOS_DOMAIN";
+    ip = builtings.getEnv "NIXOS_IP_ADDRESS";
+    defaultGateway = builtins.getEnv "NIXOS_DEFAULT_GATEWAY";
+    dns = builtins.getEnv "NIXOS_DNS";
+    adminUser = builtins.getEnv "NIXOS_ADMIN_USER";
+    adminSshPublicKey = builtins.getEnv "NIXOS_ADMIN_SSH_PUBLIC_KEY";
   };
 
-  environment.etc."${svcName}/configuration-system.nix" = {
+  svcName = "nixos-installer";
+in {
+  environment.etc."${svcName}/system/configuration.nix" = {
+    source = ./system/configuration.nix;
+  };
+
+  environment.etc."${svcName}/system/variables.nix" = {
+    source = pkgs.substituteAll {
+      src = ./system/variables.template;
+      nixosVersion = variables.nixosVersion;
+      hostName = variables.hostName;
+      domain = variables.domain;
+      ip = variables.ip;
+      defaultGateway = variables.defaultGateway;
+      dns = variables.dns;
+      adminUser = variables.adminUser;
+      adminSshPublicKey = variables.adminSshPublicKey;
+      rootDevice = variables.rootDevice;
+    };
+  };
+
+  environment.etc."${svcName}/grafana/configuration.nix" = {
+    source = ./grafana/configuration.nix;
+  };
+
+  environment.etc."${svcName}/jellyfin/configuration.nix" = {
+    source = ./jellyfin/configuration.nix;
+  };
+
+  environment.etc."${svcName}/configuration.nix" = {
     source = ./configuration-system.nix;
   };
 
@@ -24,11 +54,6 @@ in {
     path = [ "/run/current-system/sw" ];
     environment = config.nix.envVars // {
       inherit (config.environment.sessionVariables) NIX_PATH;
-      NIXOS_VERSION = builtins.getEnv "NIXOS_VERSION";
-      NIXOS_HOSTNAME = builtins.getEnv "NIXOS_HOSTNAME";
-      NIXOS_DOMAIN = builtins.getEnv "NIXOS_DOMAIN";
-      NIXOS_ADMIN_USER = builtins.getEnv "NIXOS_ADMIN_USER";
-      NIXOS_ADMIN_SSH_PUBLIC_KEY = builtins.getEnv "NIXOS_ADMIN_SSH_PUBLIC_KEY";
       HOME = "/root";
     };
     serviceConfig = {
@@ -57,11 +82,9 @@ in {
       mount /dev/disk/by-label/boot /mnt/boot
       # Use the generated hardware-configuration.nix.
       nixos-generate-config --root /mnt
-      cp /etc/${config.environment.etc."${svcName}/configuration-shared.nix".target} /mnt/etc/nixos/base-configuration.nix
-      cp /etc/${config.environment.etc."${svcName}/configuration-system.nix".target} /mnt/etc/nixos/configuration.nix
+      cp -rp /etc/${config.environment.etc."${svcName}"}/* /mnt/etc/nixos/
 
       nixos-install --no-root-passwd
-      reboot
     '';
   };
 }
