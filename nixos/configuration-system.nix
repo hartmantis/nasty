@@ -24,7 +24,7 @@ in {
 
   users.mutableUsers = false;
 
-  users.users.cheese = {
+  users.users."${adminUser}" = {
     isNormalUser = true;
     description = "It's me";
     extraGroups = ["wheel"];
