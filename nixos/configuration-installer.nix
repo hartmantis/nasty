@@ -68,8 +68,8 @@ in {
       # Use the generated hardware-configuration.nix.
       nixos-generate-config --root /mnt
 
-      cp -r ${githubWorkspace}/nasty /etc/
-      cp ${githubWorkspace}/nasty/nixos/configuration.nix /etc/nixos/
+      cp -r ${variables.githubWorkspace}/nasty /etc/
+      cp ${variables.githubWorkspace}/nasty/nixos/configuration.nix /etc/nixos/
       mkdir /mnt/etc/nixos-variables
       cp /etc/nixos-variables/system.nix /mnt/etc/nixos-variables/
 
