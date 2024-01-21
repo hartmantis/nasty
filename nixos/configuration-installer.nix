@@ -16,7 +16,7 @@
 in {
   environment.etc.nasty = {
     source = variables.githubWorkspace;
-  }
+  };
 
   environment.etc."nixos-variables/system.nix" = {
     source = pkgs.substituteAll {
