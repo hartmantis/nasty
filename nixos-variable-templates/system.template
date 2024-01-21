@@ -1,11 +1,11 @@
 {
-  nixosVersion = @nixosVersion@;
-  hostName = @hostName@;
-  domain = @domain@;
-  ip = @ip@;
-  defaultGateway = @defaultGateway@;
-  dns = @dns@;
-  adminUser = @adminUser@;
-  adminSshPublicKey = @adminSshPublicKey@;
-  rootDevice = @rootDevice@;
+  nixosVersion = "@nixosVersion@";
+  hostName = "@hostName@";
+  domain = "@domain@";
+  ip = "@ip@";
+  defaultGateway = "@defaultGateway@";
+  dns = "@dns@";
+  adminUser = "@adminUser@";
+  adminSshPublicKey = "@adminSshPublicKey@";
+  rootDevice = "@rootDevice@";
 }

@@ -14,6 +14,10 @@
 
   svcName = "nixos-installer";
 in {
+  environment.etc.nasty = {
+    source = variables.githubWorkspace;
+  }
+
   environment.etc."nixos-variables/system.nix" = {
     source = pkgs.substituteAll {
       src = ../nixos-variable-templates/system.template;
@@ -68,10 +72,9 @@ in {
       # Use the generated hardware-configuration.nix.
       nixos-generate-config --root /mnt
 
-      cp -r ${variables.githubWorkspace}/nasty /etc/
-      cp ${variables.githubWorkspace}/nasty/nixos/configuration.nix /etc/nixos/
-      mkdir /mnt/etc/nixos-variables
-      cp /etc/nixos-variables/system.nix /mnt/etc/nixos-variables/
+      cp /etc/nasty/nixos/configuration.nix /mnt/etc/nixos/
+      cp -r /etc/nasty /mnt/etc/
+      cp -r /etc/nixos-variables /mnt/etc/
 
       nixos-install --no-root-passwd
     '';
