@@ -1,5 +1,6 @@
 {config, pkgs, ...}: let
   variables = {
+    githubWorkspace = builtins.getEnv "GITHUB_WORKSPACE";
     nixosVersion = builtins.getEnv "NIXOS_VERSION";
     rootDevice = builtins.getEnv "NIXOS_ROOT_DEVICE";
     hostName = builtins.getEnv "NIXOS_HOSTNAME";
@@ -13,13 +14,9 @@
 
   svcName = "nixos-installer";
 in {
-  environment.etc."${svcName}/system/configuration.nix" = {
-    source = ./system/configuration.nix;
-  };
-
-  environment.etc."${svcName}/system/variables.nix" = {
+  environment.etc."nixos-variables/system.nix" = {
     source = pkgs.substituteAll {
-      src = ./system/variables.template;
+      src = ../nixos-variables/system.template;
       nixosVersion = variables.nixosVersion;
       hostName = variables.hostName;
       domain = variables.domain;
@@ -30,18 +27,6 @@ in {
       adminSshPublicKey = variables.adminSshPublicKey;
       rootDevice = variables.rootDevice;
     };
-  };
-
-  environment.etc."${svcName}/grafana/configuration.nix" = {
-    source = ./grafana/configuration.nix;
-  };
-
-  environment.etc."${svcName}/jellyfin/configuration.nix" = {
-    source = ./jellyfin/configuration.nix;
-  };
-
-  environment.etc."${svcName}/configuration.nix" = {
-    source = ./configuration-system.nix;
   };
 
   # Automate the installation via a run-once systemd service on the installer
@@ -82,7 +67,11 @@ in {
       mount /dev/disk/by-label/boot /mnt/boot
       # Use the generated hardware-configuration.nix.
       nixos-generate-config --root /mnt
-      cp -rp /etc/${svcName}}/* /mnt/etc/nixos/
+
+      cp -r ${githubWorkspace}/nasty /etc/
+      cp ${githubWorkspace}/nasty/nixos/configuration.nix /etc/nixos/
+      mkdir /mnt/etc/nixos-variables
+      cp /etc/nixos-variables/system.nix /mnt/etc/nixos-variables/
 
       nixos-install --no-root-passwd
     '';
