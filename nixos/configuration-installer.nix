@@ -16,7 +16,7 @@
 in {
   environment.etc."nixos-variables/system.nix" = {
     source = pkgs.substituteAll {
-      src = ../nixos-variables/system.template;
+      src = ../nixos-variable-templates/system.template;
       nixosVersion = variables.nixosVersion;
       hostName = variables.hostName;
       domain = variables.domain;
