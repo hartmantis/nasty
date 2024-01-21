@@ -14,6 +14,49 @@
 
   svcName = "nixos-installer";
 in {
+  assertions = [
+    {
+      assertion = variables.githubWorkspace != "";
+      message = "githubWorkspace is empty!";
+    }
+    {
+      assertion = variables.nixosVersion != "";
+      message = "nixosVersion is empty!";
+    }
+    {
+      assertion = variables.rootDevice != "";
+      message = "rootDevice is empty!";
+    }
+    {
+      assertion = variables.hostName != "";
+      message = "hostName is empty!";
+    }
+    {
+      assertion = variables.domain != "";
+      message = "domain is empty!";
+    }
+    {
+      assertion = variables.ip != "";
+      message = "ip is empty!";
+    }
+    {
+      assertion = variables.defaultGateway != "";
+      message = "defaultGateway is empty!";
+    }
+    {
+      assertion = variables.dns != "";
+      message = "dns is empty!";
+    }
+    {
+      assertion = variables.adminUser != "";
+      message = "adminUser is empty!";
+    }
+    {
+      assertion = variables.adminSshPublicKey != "";
+      message = "adminSshPublicKey is empty!";
+    }
+  ];
+
   environment.etc.nasty = {
     source = variables.githubWorkspace;
   };

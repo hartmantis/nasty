@@ -26,13 +26,14 @@ jobs:
           NIXOS_ROOT_DEVICE: ${{ vars.nixos_root_device }}
           NIXOS_HOSTNAME: ${{ vars.nixos_hostname }}
           NIXOS_DOMAIN: ${{ vars.nixos_domain }}
-          NIXOS_IP: ${{ vars.nixos_ip_address }}
+          NIXOS_IP_ADDRESS: ${{ vars.nixos_ip_address }}
           NIXOS_DEFAULT_GATEWAY: ${{ vars.nixos_default_gateway }}
           NIXOS_DNS: ${{ vars.nixos_dns }}
           NIXOS_ADMIN_USER: ${{ vars.nixos_admin_user }}
           NIXOS_ADMIN_SSH_PUBLIC_KEY: ${{ vars.nixos_admin_ssh_public_key }}
         run: |
-          nix-shell -p nixos-generators --run "nixos-generate -f install-iso -c ${{ github.workspace }}/nixos/configuration-installer.nix -o result"
+          nix-shell -p nixos-generators \
+            --run "nixos-generate -f install-iso -c ${{ github.workspace }}/nixos/configuration-installer.nix -o result"
           echo "artifact_build_time=$(date -u +%Y-%m-%dT%H_%M_%S)" >> $GITHUB_OUTPUT
           echo "artifact_digest=$(readlink result | cut -d '/' -f 4 | cut -d '-' -f 1)" >> $GITHUB_OUTPUT
           echo "artifact_path=$(readlink result)" >> $GITHUB_OUTPUT
