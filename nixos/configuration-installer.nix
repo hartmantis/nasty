@@ -82,7 +82,7 @@ in {
       mount /dev/disk/by-label/boot /mnt/boot
       # Use the generated hardware-configuration.nix.
       nixos-generate-config --root /mnt
-      cp -rp /etc/${config.environment.etc."${svcName}"}/* /mnt/etc/nixos/
+      cp -rp /etc/${svcName}}/* /mnt/etc/nixos/
 
       nixos-install --no-root-passwd
     '';
