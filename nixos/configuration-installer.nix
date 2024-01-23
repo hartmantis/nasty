@@ -59,6 +59,7 @@ in {
 
   environment.etc.nasty = {
     source = variables.githubWorkspace;
+    mode = "0755";
   };
 
   environment.etc."nixos-variables/system.nix" = {
@@ -74,6 +75,7 @@ in {
       adminSshPublicKey = variables.adminSshPublicKey;
       rootDevice = variables.rootDevice;
     };
+    mode = "0644";
   };
 
   # Automate the installation via a run-once systemd service on the installer
