@@ -1,6 +1,8 @@
 {config, pkgs, ...}: let
   variables = {
-    githubWorkspace = builtins.getEnv "GITHUB_WORKSPACE";
+    githubRepo = builtins.getEnv "GITHUB_REPOSITORY";
+    githubRef = builtins.getEnv "GITHUB_REF";
+    githubSha = builtins.getEnv "GITHUB_SHA";
     nixosVersion = builtins.getEnv "NIXOS_VERSION";
     rootDevice = builtins.getEnv "NIXOS_ROOT_DEVICE";
     hostName = builtins.getEnv "NIXOS_HOSTNAME";
@@ -16,8 +18,16 @@
 in {
   assertions = [
     {
-      assertion = variables.githubWorkspace != "";
-      message = "githubWorkspace is empty!";
+      assertion = variables.githubRepo != "";
+      message = "githubRepo is empty!";
+    }
+    {
+      assertion = variables.githubRef != "";
+      message = "githubRef is empty!";
+    }
+    {
+      assertion = variables.githubSha != "";
+      message = "githubSha is empty!";
     }
     {
       assertion = variables.nixosVersion != "";
@@ -58,7 +68,11 @@ in {
   ];
 
   environment.etc.nasty = {
-    source = variables.githubWorkspace;
+    source = builtins.fetchGit {
+      url = "https://github.com/${variables.githubRepo}";
+      ref = variables.githubRef;
+      rev = variables.githubSha;
+    };
     mode = "0755";
   };
 
