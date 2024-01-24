@@ -98,7 +98,7 @@ in {
   systemd.services."${svcName}" = {
     description = "NixOS installer";
     wantedBy = [ "multi-user.target" ];
-    after = [ "getty.target" "ncsd.service" ];
+    after = [ "getty.target" "nss-lookup.target" "ncsd.service" ];
     path = [ "/run/current-system/sw" ];
     environment = config.nix.envVars // {
       inherit (config.environment.sessionVariables) NIX_PATH;
