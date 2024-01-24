@@ -1,9 +1,6 @@
 {config, pkgs, ...}: let
   variables = {
-    githubServerUrl = builtins.getEnv "GITHUB_SERVER_URL";
-    githubRepo = builtins.getEnv "GITHUB_REPOSITORY";
-    githubRef = builtins.getEnv "GITHUB_REF";
-    githubSha = builtins.getEnv "GITHUB_SHA";
+    githubWorkspace = builtins.getEnv "GITHUB_WORKSPACE";
     nixosVersion = builtins.getEnv "NIXOS_VERSION";
     rootDevice = builtins.getEnv "NIXOS_ROOT_DEVICE";
     hostName = builtins.getEnv "NIXOS_HOSTNAME";
@@ -19,16 +16,8 @@
 in {
   assertions = [
     {
-      assertion = variables.githubRepo != "";
-      message = "githubRepo is empty!";
-    }
-    {
-      assertion = variables.githubRef != "";
-      message = "githubRef is empty!";
-    }
-    {
-      assertion = variables.githubSha != "";
-      message = "githubSha is empty!";
+      assertion = variables.githubWorkspace != "";
+      message = "githubWorkspace is empty!";
     }
     {
       assertion = variables.nixosVersion != "";
@@ -68,14 +57,9 @@ in {
     }
   ];
 
-  environment.etc.nasty = {
-    source = builtins.fetchGit {
-      url = "${variables.githubServerUrl}/${variables.githubRepo}";
-      ref = variables.githubRef;
-      rev = variables.githubSha;
-      leaveDotGit = true;
-    };
-  };
+  system.activationScripts.copy-git-repo = ''
+    cp -r ${variables.githubWorkspace} /etc/nasty
+  '';
 
   environment.etc."nixos-variables/system.nix" = {
     source = pkgs.substituteAll {
