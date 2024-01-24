@@ -73,6 +73,7 @@ in {
       url = "${variables.githubServerUrl}/${variables.githubRepo}";
       ref = variables.githubRef;
       rev = variables.githubSha;
+      leaveDotGit = true;
     };
   };
 
