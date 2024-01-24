@@ -1,5 +1,6 @@
 {config, pkgs, ...}: let
   variables = {
+    githubServerUrl = builtins.getEnv "GITHUB_SERVER_URL";
     githubRepo = builtins.getEnv "GITHUB_REPOSITORY";
     githubRef = builtins.getEnv "GITHUB_REF";
     githubSha = builtins.getEnv "GITHUB_SHA";
@@ -69,11 +70,10 @@ in {
 
   environment.etc.nasty = {
     source = builtins.fetchGit {
-      url = "https://github.com/${variables.githubRepo}";
+      url = "${variables.githubServerUrl}/${variables.githubRepo}";
       ref = variables.githubRef;
       rev = variables.githubSha;
     };
-    mode = "0755";
   };
 
   environment.etc."nixos-variables/system.nix" = {
@@ -132,7 +132,7 @@ in {
       nixos-generate-config --root /mnt
 
       cp /etc/nasty/nixos/configuration.nix /mnt/etc/nixos/
-      cp -r /etc/nasty /mnt/etc/
+      cp -rL /etc/nasty /mnt/etc/
       cp -r /etc/nixos-variables /mnt/etc/
 
       nixos-install --no-root-passwd
