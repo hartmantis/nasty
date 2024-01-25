@@ -1,6 +1,5 @@
 {config, pkgs, ...}: let
   variables = {
-    githubWorkspace = builtins.getEnv "GITHUB_WORKSPACE";
     nixosVersion = builtins.getEnv "NIXOS_VERSION";
     rootDevice = builtins.getEnv "NIXOS_ROOT_DEVICE";
     hostName = builtins.getEnv "NIXOS_HOSTNAME";
@@ -15,10 +14,6 @@
   svcName = "nixos-installer";
 in {
   assertions = [
-    {
-      assertion = variables.githubWorkspace != "";
-      message = "githubWorkspace is empty!";
-    }
     {
       assertion = variables.nixosVersion != "";
       message = "nixosVersion is empty!";
@@ -57,25 +52,41 @@ in {
     }
   ];
 
-  system.activationScripts.copy-git-repo = ''
-    cp -r ${variables.githubWorkspace} /etc/nasty
-  '';
+  environment.systemPackages = with pkgs; [
+    (callPackage stdenv.mkDerivation {
+      name = "nasty";
+      version = "0.0.0";
+      src = ../..;
+      dontFixup = true;
+      installPhase = ''
+        cp -r $src $out
+      '';
+    })
 
-  environment.etc."nixos-variables/system.nix" = {
-    source = pkgs.substituteAll {
-      src = ../nixos-variable-templates/system.template;
-      nixosVersion = variables.nixosVersion;
-      hostName = variables.hostName;
-      domain = variables.domain;
-      ip = variables.ip;
-      defaultGateway = variables.defaultGateway;
-      dns = variables.dns;
-      adminUser = variables.adminUser;
-      adminSshPublicKey = variables.adminSshPublicKey;
-      rootDevice = variables.rootDevice;
-    };
-    mode = "0644";
-  };
+    (callPackage stdenv.mkDerivation {
+      name = "nasty-nixos-variables";
+      version = "0.0.0";
+      src = ../nixos-variable-templates;
+      dontFixup = true;
+      #patches = [
+      #  (substituteAll {
+      #    src = ../nixos-variable-templates/system.template;
+      #    nixosVersion = variables.nixosVersion;
+      #    hostName = variables.hostName;
+      #    domain = variables.domain;
+      #    ip = variables.ip;
+      #    defaultGateway = variables.defaultGateway;
+      #    dns = variables.dns;
+      #    adminUser = variables.adminUser;
+      #    adminSshPublicKey = variables.adminSshPublicKey;
+      #    rootDevice = variables.rootDevice;
+      #  })
+      #];
+      installPhase = ''
+        cp -r $src $out
+      '';
+    })
+  ];
 
   # Automate the installation via a run-once systemd service on the installer
   # image. Adapted from
