@@ -129,9 +129,9 @@ in {
       # Use the generated hardware-configuration.nix.
       nixos-generate-config --root /mnt
 
-      cp /etc/nasty/nixos/configuration.nix /mnt/etc/nixos/
-      cp -rL /etc/nasty /mnt/etc/
-      cp -r /etc/nixos-variables /mnt/etc/
+      cp -r /nix/store/*-nasty-0.1.0 /mnt/etc/nasty
+      cp -r /nix/store/*-nasty-nixos-variables-0.1.0 /mnt/etc/nasty-nixos-variables
+      cp /mnt/etc/nasty/nixos/configuration.nix /mnt/etc/nixos/
 
       nixos-install --no-root-passwd
     '';
