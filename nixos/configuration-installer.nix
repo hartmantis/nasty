@@ -53,18 +53,18 @@ in {
   ];
 
   environment.systemPackages = with pkgs; [
-    stdenv.mkDerivation rec {
+    (stdenv.mkDerivation rec {
       name = "nasty-${version}";
       version = "0.1.0";
-      src = ..;
+      src = ./..;
       dontFixup = true;
       installPhase = ''
         mkdir -p $out/etc
         cp -r $src $out/etc/nasty
       '';
-    }
+    })
 
-    stdenv.mkDerivation rec {
+    (stdenv.mkDerivation rec {
       name = "nasty-nixos-variables-${version}";
       version = "0.1.0";
       src = ../nixos-variable-templates;
@@ -87,7 +87,7 @@ in {
         mkdir -p $out/etc
         cp -r $src $out/etc/nasty-nixos-variables
       '';
-    }
+    })
   ];
 
   # Automate the installation via a run-once systemd service on the installer
