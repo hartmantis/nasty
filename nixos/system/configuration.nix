@@ -1,5 +1,5 @@
 {config, pkgs, ...}: let
-  variables = import ./variables.nix;
+  variables = import ../variables/system.nix;
 in {
   system.stateVersion = variables.nixosVersion;
 

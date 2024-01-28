@@ -52,6 +52,21 @@ in {
     }
   ];
 
+  environment.etc."nasty-nixos-variables/system.nix" = {
+    source = pkgs.substituteAll {
+      src = ./variable-templates/system.template;
+      nixosVersion = variables.nixosVersion;
+      hostName = variables.hostName;
+      domain = variables.domain;
+      ip = variables.ip;
+      defaultGateway = variables.defaultGateway;
+      dns = variables.dns;
+      adminUser = variables.adminUser;
+      adminSshPublicKey = variables.adminSshPublicKey;
+      rootDevice = variables.rootDevice;
+    };
+  };
+
   environment.systemPackages = with pkgs; [
     (stdenv.mkDerivation rec {
       name = "nasty-${version}";
@@ -61,31 +76,7 @@ in {
       installPhase = ''
         mkdir -p $out/lib
         cp -r $src $out/lib/nasty
-      '';
-    })
-
-    (stdenv.mkDerivation rec {
-      name = "nasty-nixos-variables-${version}";
-      version = "0.1.0";
-      src = ../nixos-variable-templates;
-      dontFixup = true;
-      #patches = [
-      #  (substituteAll {
-      #    src = ../nixos-variable-templates/system.template;
-      #    nixosVersion = variables.nixosVersion;
-      #    hostName = variables.hostName;
-      #    domain = variables.domain;
-      #    ip = variables.ip;
-      #    defaultGateway = variables.defaultGateway;
-      #    dns = variables.dns;
-      #    adminUser = variables.adminUser;
-      #    adminSshPublicKey = variables.adminSshPublicKey;
-      #    rootDevice = variables.rootDevice;
-      #  })
-      #];
-      installPhase = ''
-        mkdir -p $out/lib
-        cp -r $src $out/lib/nasty-nixos-variables
+        cp -r /etc/nasty-nixos-variables $out/lib/nasty/nixos/variables
       '';
     })
   ];
@@ -135,7 +126,6 @@ in {
       nixos-generate-config --root /mnt
 
       cp -r /nix/store/*-nasty-0.1.0/lib/nasty /mnt/etc/nasty
-      cp -r /nix/store/*-nasty-nixos-variables-0.1.0/lib/nasty-nixos-variables /mnt/etc/nasty-nixos-variables
       cp /mnt/etc/nasty/nixos/configuration.nix /mnt/etc/nixos/
 
       nixos-install --no-root-passwd
