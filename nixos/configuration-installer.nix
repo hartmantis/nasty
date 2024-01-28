@@ -110,6 +110,11 @@ in {
     script = ''
       set -euxo pipefail
 
+      DNS=false
+      while [ "$DNS" != "true" ]; do
+        host -t a fastly.com > /dev/null && DNS="true" || sleep 1
+      done
+
       wipefs -fa /dev/${variables.rootDevice}
 
       parted /dev/${variables.rootDevice} -- mklabel gpt
