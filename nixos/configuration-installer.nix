@@ -59,8 +59,8 @@ in {
       src = ./..;
       dontFixup = true;
       installPhase = ''
-        mkdir -p $out/etc
-        cp -r $src $out/etc/nasty
+        mkdir -p $out/lib
+        cp -r $src $out/lib/nasty
       '';
     })
 
@@ -84,8 +84,8 @@ in {
       #  })
       #];
       installPhase = ''
-        mkdir -p $out/etc
-        cp -r $src $out/etc/nasty-nixos-variables
+        mkdir -p $out/lib
+        cp -r $src $out/lib/nasty-nixos-variables
       '';
     })
   ];
@@ -129,8 +129,8 @@ in {
       # Use the generated hardware-configuration.nix.
       nixos-generate-config --root /mnt
 
-      cp -r /nix/store/*-nasty-0.1.0 /mnt/etc/nasty
-      cp -r /nix/store/*-nasty-nixos-variables-0.1.0 /mnt/etc/nasty-nixos-variables
+      cp -r /nix/store/*-nasty-0.1.0/lib/nasty /mnt/etc/nasty
+      cp -r /nix/store/*-nasty-nixos-variables-0.1.0/lib/nasty-nixos-variables /mnt/etc/nasty-nixos-variables
       cp /mnt/etc/nasty/nixos/configuration.nix /mnt/etc/nixos/
 
       nixos-install --no-root-passwd
