@@ -9,6 +9,20 @@
     dns = builtins.getEnv "NIXOS_DNS";
     adminUser = builtins.getEnv "NIXOS_ADMIN_USER";
     adminSshPublicKey = builtins.getEnv "NIXOS_ADMIN_SSH_PUBLIC_KEY";
+
+    # Template files:
+    system = pkgs.substituteAll {
+      src = ./variable-templates/system.template;
+      nixosVersion = variables.nixosVersion;
+      hostName = variables.hostName;
+      domain = variables.domain;
+      ip = variables.ip;
+      defaultGateway = variables.defaultGateway;
+      dns = variables.dns;
+      adminUser = variables.adminUser;
+      adminSshPublicKey = variables.adminSshPublicKey;
+      rootDevice = variables.rootDevice;
+    };
   };
 
   svcName = "nixos-installer";
@@ -52,21 +66,6 @@ in {
     }
   ];
 
-  environment.etc."nasty-nixos-variables/system.nix" = {
-    source = pkgs.substituteAll {
-      src = ./variable-templates/system.template;
-      nixosVersion = variables.nixosVersion;
-      hostName = variables.hostName;
-      domain = variables.domain;
-      ip = variables.ip;
-      defaultGateway = variables.defaultGateway;
-      dns = variables.dns;
-      adminUser = variables.adminUser;
-      adminSshPublicKey = variables.adminSshPublicKey;
-      rootDevice = variables.rootDevice;
-    };
-  };
-
   environment.systemPackages = with pkgs; [
     (stdenv.mkDerivation rec {
       name = "nasty-${version}";
@@ -76,7 +75,10 @@ in {
       installPhase = ''
         mkdir -p $out/lib
         cp -r $src $out/lib/nasty
-        cp -r /etc/nasty-nixos-variables $out/lib/nasty/nixos/variables
+        # The GitHub checkout action checks things out readonly.
+        chmod +w $out/lib/nasty/nixos
+        mkdir -p $out/lib/nasty/nixos/variables
+        cp ${variables.system} $out/lib/nasty/nixos/variables/system.nix
       '';
     })
   ];
