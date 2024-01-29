@@ -51,7 +51,8 @@ in {
   ];
 
   environment.systemPackages = with pkgs; [
-    zfs
+    git
     vim
+    zfs
   ];
 }
