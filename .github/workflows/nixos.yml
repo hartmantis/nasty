@@ -26,6 +26,7 @@ jobs:
           NIXOS_ROOT_DEVICE: ${{ vars.nixos_root_device }}
           NIXOS_HOSTNAME: ${{ vars.nixos_hostname }}
           NIXOS_DOMAIN: ${{ vars.nixos_domain }}
+          NIXOS_HOSTID: ${{ vars.nixos_hostid }}
           NIXOS_IP_ADDRESS: ${{ vars.nixos_ip_address }}
           NIXOS_DEFAULT_GATEWAY: ${{ vars.nixos_default_gateway }}
           NIXOS_DNS: ${{ vars.nixos_dns }}

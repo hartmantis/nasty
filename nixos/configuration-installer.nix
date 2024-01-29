@@ -4,6 +4,7 @@
     rootDevice = builtins.getEnv "NIXOS_ROOT_DEVICE";
     hostName = builtins.getEnv "NIXOS_HOSTNAME";
     domain = builtins.getEnv "NIXOS_DOMAIN";
+    hostId = builtins.getEnv "NIXOS_HOSTID";
     ip = builtins.getEnv "NIXOS_IP_ADDRESS";
     defaultGateway = builtins.getEnv "NIXOS_DEFAULT_GATEWAY";
     dns = builtins.getEnv "NIXOS_DNS";
@@ -16,6 +17,7 @@
       nixosVersion = variables.nixosVersion;
       hostName = variables.hostName;
       domain = variables.domain;
+      hostId = variables.hostId;
       ip = variables.ip;
       defaultGateway = variables.defaultGateway;
       dns = variables.dns;
@@ -43,6 +45,10 @@ in {
     {
       assertion = variables.domain != "";
       message = "domain is empty!";
+    }
+    {
+      assertion = variables.hostId != "";
+      message = "hostId is empty!";
     }
     {
       assertion = variables.ip != "";

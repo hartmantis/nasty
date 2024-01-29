@@ -2,6 +2,7 @@
   nixosVersion = "@nixosVersion@";
   hostName = "@hostName@";
   domain = "@domain@";
+  hostId = "@hostId@";
   ip = "@ip@";
   defaultGateway = "@defaultGateway@";
   dns = "@dns@";

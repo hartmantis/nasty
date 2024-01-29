@@ -7,11 +7,13 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   # /Copy
+  boot.supportedFilesystems = [ "zfs" ];
 
   time.timeZone = "Etc/UTC";
 
   networking.hostName = variables.hostName;
   networking.domain = variables.domain;
+  networking.hostId = variables.hostId;
 
   networking.interfaces.eno1.ipv4.addresses = [
     {
