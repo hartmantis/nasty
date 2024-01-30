@@ -137,6 +137,8 @@ in {
       cp /mnt/etc/nasty/nixos/configuration.nix /mnt/etc/nixos/
 
       nixos-install --no-root-passwd
+
+      reboot
     '';
   };
 }
