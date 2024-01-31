@@ -8,6 +8,7 @@
     ip = builtins.getEnv "NIXOS_IP_ADDRESS";
     defaultGateway = builtins.getEnv "NIXOS_DEFAULT_GATEWAY";
     dns = builtins.getEnv "NIXOS_DNS";
+    bootstrapDeviceName = builtins.getEnv "NIXOS_BOOTSTRAP_DEVICE_NAME";
     adminUser = builtins.getEnv "NIXOS_ADMIN_USER";
     adminSshPublicKey = builtins.getEnv "NIXOS_ADMIN_SSH_PUBLIC_KEY";
 
@@ -61,6 +62,10 @@ in {
     {
       assertion = variables.dns != "";
       message = "dns is empty!";
+    }
+    {
+      assertion = variables.bootstrapDeviceName != "";
+      message = "bootstrapDeviceName is empty!";
     }
     {
       assertion = variables.adminUser != "";
@@ -137,6 +142,12 @@ in {
       cp /mnt/etc/nasty/nixos/configuration.nix /mnt/etc/nixos/
 
       nixos-install --no-root-passwd
+
+      mkdir /bootstrap-device
+      mount /dev/disk/by-label/${variables.bootstrapDeviceName} /bootstrap-device
+      cp /bootstrap-device/ssh_host_* /mnt/etc/ssh/
+      chmod 0600 /mnt/etc/ssh/ssh_host_*_key
+      chmod 0644 /mnt/etc/ssh/ssh_host_*_key.pub
 
       reboot
     '';
