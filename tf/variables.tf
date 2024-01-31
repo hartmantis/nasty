@@ -10,3 +10,9 @@ variable "domain" {
 variable "ip_address" {
   description = "The IP address of our NAS"
 }
+variable "pagerduty_admin_email" {
+  description = "The admin user's PagerDuty email address"
+}
+variable "pagerduty_api_key" {
+  description = "An API key for accessing PagerDuty"
+}
