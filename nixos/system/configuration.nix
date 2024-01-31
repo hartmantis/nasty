@@ -35,7 +35,8 @@ in {
 
   users.users."${variables.adminUser}" = {
     isNormalUser = true;
-    description = "It's me";
+    uid = 1000;
+    description = "Primary admin user";
     extraGroups = ["wheel"];
     openssh.authorizedKeys.keys = [ variables.adminSshPublicKey ];
   };
