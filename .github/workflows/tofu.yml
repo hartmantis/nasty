@@ -2,10 +2,13 @@ name: tofu
 
 on:
   pull_request:
-    # TODO
+    paths:
+      - 'tf/**'
   push:
     branches:
-      - master
+      - main
+    paths:
+      - 'tf/**'
   schedule:
     - cron: 0 19 * * 2
 
