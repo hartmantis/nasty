@@ -2,6 +2,7 @@
   variables = import ../variables/system.nix;
 in {
   system.stateVersion = variables.nixosVersion;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Copy of what ends up in a default configuration.nix.
   boot.loader.systemd-boot.enable = true;
