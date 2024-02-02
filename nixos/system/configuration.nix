@@ -9,6 +9,7 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
   # /Copy
   boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.devNodes = "/dev/disk/by-partlabel";
   boot.zfs.extraPools = [ "data" ];
 
   time.timeZone = "Etc/UTC";
