@@ -2,6 +2,6 @@
 in {
   imports = [
     ./hardware-configuration.nix
-    ../nasty/nixos/configuration-system.nix
+    ../nasty/nixos
   ];
 }
