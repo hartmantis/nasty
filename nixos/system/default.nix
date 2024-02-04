@@ -65,4 +65,6 @@ in {
     vim
     zfs
   ];
+
+  programs.tmux.enable = true;
 }
