@@ -109,6 +109,7 @@ in {
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = "yes";
+      StandardOutput = "journal+console";
     };
 
     script = ''
