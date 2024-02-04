@@ -36,11 +36,15 @@ in {
 
   users.mutableUsers = false;
 
+  users.groups.admins = {
+    gid = 1000;
+  };
+
   users.users."${variables.adminUser}" = {
     isNormalUser = true;
     uid = 1000;
     description = "Primary admin user";
-    extraGroups = ["wheel"];
+    extraGroups = [ "wheel" "admins" ];
     openssh.authorizedKeys.keys = [ variables.adminSshPublicKey ];
   };
 
