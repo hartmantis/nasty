@@ -78,6 +78,7 @@ in {
       vaapiIntel
       vaapiVdpau
       libvdpau-va-gl
+      intel-compute-runtime
     ];
   };
 }
