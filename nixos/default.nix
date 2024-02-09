@@ -2,6 +2,7 @@
 in {
   imports = [
     ./system
+    ./agenix
     ./grafana
     ./jellyfin
   ];
