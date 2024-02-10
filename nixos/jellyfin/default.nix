@@ -8,7 +8,5 @@
 
   services.jellyfin = {
     enable = true;
-    # TODO: Set up a reverse proxy with TLS.
-    openFirewall = true;
   };
 }

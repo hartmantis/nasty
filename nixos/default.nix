@@ -5,5 +5,6 @@ in {
     ./agenix
     ./grafana
     ./jellyfin
+    ./traefik
   ];
 }
