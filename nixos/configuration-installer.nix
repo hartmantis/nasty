@@ -86,8 +86,13 @@ in {
       installPhase = ''
         mkdir -p $out/lib
         cp -r $src $out/lib/nasty
+
         # The GitHub checkout action checks things out readonly.
-        chmod +w $out/lib/nasty/nixos
+        chmod -R +w $out
+        # And puts the temporary token in the Git config.
+        sed -i -r '/^\s+extraheader/d' $out/lib/nasty/.git/config
+
+        # Drop in templates we've rendered from builder-fed variables.
         mkdir -p $out/lib/nasty/nixos/variables
         cp ${variables.system} $out/lib/nasty/nixos/variables/system.nix
       '';
