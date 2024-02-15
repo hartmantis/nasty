@@ -144,7 +144,8 @@ in {
       # Use the generated hardware-configuration.nix.
       nixos-generate-config --root /mnt
 
-      cp -r /nix/store/*-nasty-0.1.0/lib/nasty /mnt/etc/nasty
+      cp -r /nix/store/*-nasty-0.1.0/lib/nasty /mnt/etc/nixos/
+      cp /mnt/etc/nasty/nixos/flake.nix /mnt/etc/nixos/
       cp /mnt/etc/nasty/nixos/configuration.nix /mnt/etc/nixos/
 
       nixos-install --no-root-passwd
