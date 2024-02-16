@@ -146,7 +146,6 @@ in {
 
       cp -r /nix/store/*-nasty-0.1.0/lib/nasty /mnt/etc/nixos/
       cp /mnt/etc/nasty/nixos/flake.nix /mnt/etc/nixos/
-      cp /mnt/etc/nasty/nixos/configuration.nix /mnt/etc/nixos/
 
       nixos-install --no-root-passwd
 
