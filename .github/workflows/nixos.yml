@@ -38,7 +38,7 @@ jobs:
           NIXOS_ADMIN_SSH_PUBLIC_KEY: ${{ vars.nixos_admin_ssh_public_key }}
         run: |
           nix-shell -p nixos-generators \
-            --run "nixos-generate -f install-iso -c ${{ github.workspace }}/nixos/configuration-installer.nix -o result"
+            --run "nixos-generate -f install-iso -c ${{ github.workspace }}/nixos/installer.nix -o result"
           echo "artifact_build_time=$(date -u +%Y-%m-%dT%H_%M_%S)" >> $GITHUB_OUTPUT
           echo "artifact_digest=$(readlink result | cut -d '/' -f 4 | cut -d '-' -f 1)" >> $GITHUB_OUTPUT
           echo "artifact_path=$(readlink result)" >> $GITHUB_OUTPUT
