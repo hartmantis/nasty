@@ -141,11 +141,17 @@ in {
       mount /dev/disk/by-label/nixos /mnt
       mkdir -p /mnt/boot
       mount /dev/disk/by-label/boot /mnt/boot
-      # Use the generated hardware-configuration.nix.
+
       nixos-generate-config --root /mnt
 
       cp -r /nix/store/*-nasty-0.1.0/lib/nasty /mnt/etc/nixos/
-      cp /mnt/etc/nasty/nixos/flake.nix /mnt/etc/nixos/
+      pushd /mnt/etc/nixos
+      # Use the generated hardware-configuration.nix.
+      mv hardware-configuration.nix nasty/nixos/
+      ln -s nasty/nixos/flake.nix flake.nix
+      ln -s nasty/nixos/flake.lock flake.lock
+      ln -s nasty/nixos/hardware-configuration.nix hardware-configuration.nix
+      popd
 
       nixos-install --no-root-passwd
 

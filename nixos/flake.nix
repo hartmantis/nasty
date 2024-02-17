@@ -6,14 +6,18 @@
   };
 
   outputs = { self, nixpkgs }: let
-    variables = import ./nasty/nixos/variables/system.nix;
+    variables = import ./variables/system.nix;
   in {
     nixosConfigurations = {
       "${variables.hostName}" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./hardware-configuration.nix
-          ./nasty/nixos
+          ./system
+          ./agenix
+          ./grafana
+          ./jellyfin
+          ./traefik
         ];
       };
     };

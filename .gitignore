@@ -44,6 +44,3 @@ tf/.terraform.lock.hcl
 tf/.tofu.lock.hcl
 
 **/.*.swp
-
-# Rendered variable templates
-nixos/variables/*.nix
