@@ -83,6 +83,7 @@ in {
       version = "0.1.0";
       src = ./..;
       dontFixup = true;
+      buildInputs = [ git ];
       installPhase = ''
         mkdir -p $out/lib
         cp -r $src $out/lib/nasty
@@ -95,6 +96,11 @@ in {
         # Drop in templates we've rendered from builder-fed variables.
         mkdir -p $out/lib/nasty/nixos/variables
         cp ${variables.system} $out/lib/nasty/nixos/variables/system.nix
+
+        # Make sure generated files don't accidentally get committed to git.
+        pushd $out/lib/nasty
+        git update-index --assume-unchanged nixos/hardware-configuration.nix nixos/variables/*.nix
+        popd
       '';
     })
   ];
