@@ -14,7 +14,6 @@
         modules = [
           ./hardware-configuration.nix
           ./system
-          ./agenix
           ./grafana
           ./jellyfin
           ./traefik
