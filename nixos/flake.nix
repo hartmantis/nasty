@@ -6,9 +6,14 @@
 
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
+
+    secrets = {
+      url = "git+ssh://git@github.com/hartmantis/nasty-secrets.git";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, agenix }@inputs: let
+  outputs = { self, nixpkgs, agenix, secrets }@inputs: let
     variables = import ./variables/system.nix;
     system = "x86_64-linux";
   in {
