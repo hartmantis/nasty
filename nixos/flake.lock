@@ -84,7 +84,24 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "secrets": "secrets"
+      }
+    },
+    "secrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1708674803,
+        "narHash": "sha256-Zgf+HJ5wXIMa2rqZIeYDwsdxNqPabV5wJR5A9/tqu8o=",
+        "ref": "refs/heads/main",
+        "rev": "78325228cb49b3a01ac0e70c5b1e250f0492aed5",
+        "revCount": 1,
+        "type": "git",
+        "url": "ssh://git@github.com/hartmantis/nasty-secrets.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/hartmantis/nasty-secrets.git"
       }
     },
     "systems": {
