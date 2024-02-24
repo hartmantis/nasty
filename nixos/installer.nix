@@ -163,9 +163,11 @@ in {
 
       mkdir /bootstrap-device
       mount /dev/disk/by-label/${variables.bootstrapDeviceName} /bootstrap-device
-      cp /bootstrap-device/ssh_host_* /mnt/etc/ssh/
-      chmod 0600 /mnt/etc/ssh/ssh_host_*_key
-      chmod 0644 /mnt/etc/ssh/ssh_host_*_key.pub
+      cp /bootstrap-device/ssh_host_ed25519_key /mnt/etc/ssh/
+      cp /bootstrap-device/ssh_host_rsa_key /mnt/etc/ssh/
+      cp /bootstrap-device/id_ed25519 /mnt/root/.ssh/
+      chown root:root /mnt/etc/ssh/ssh_host_ed25519_key /mnt/etc/ssh/ssh_host_rsa_key /mnt/root/.ssh/id_ed25519
+      chmod 0600 /mnt/etc/ssh/ssh_host_ed25519_key /mnt/etc/ssh/ssh_host_rsa_key /mnt/root/.ssh/id_ed25519
 
       reboot
     '';
