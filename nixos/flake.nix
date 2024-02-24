@@ -13,7 +13,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, agenix, secrets }@inputs: let
+  outputs = { self, nixpkgs, agenix, secrets } @inputs: let
     variables = import ./variables/system.nix;
     system = "x86_64-linux";
   in {
@@ -29,7 +29,10 @@
           ./traefik
         ];
 
-        specialArgs = { inherit inputs; };
+        specialArgs = {
+          inherit inputs;
+          inherit secrets;
+        };
       };
     };
   };
