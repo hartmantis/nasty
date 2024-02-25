@@ -20,7 +20,7 @@ resource "porkbun_dns_record" "nasty_wildcard" {
   notes   = "Wildcard DNS for all NAS services"
 }
 
-resource "porkbun_dns_record" "nasty_email_txt_verification" {
+resource "porkbun_dns_record" "nasty_root_mx" {
   domain  = var.domain
   name    = ""
   type    = "MX"
