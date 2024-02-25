@@ -91,11 +91,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1708762968,
-        "narHash": "sha256-7JJ8uvTgotxZDcWud/BtQ7hbq9sgLLQ3W7vQKxlM/jc=",
+        "lastModified": 1708844617,
+        "narHash": "sha256-xqBMT4QaJm0oTA284Rzd1BABgtg67qmPQ9N5LV5sAA0=",
         "ref": "refs/heads/main",
-        "rev": "2ac3086cd92f6c0488b451fda98fcf241b4d223a",
-        "revCount": 5,
+        "rev": "4d9a77f7a3628783e846dd256500af2219e746b8",
+        "revCount": 9,
         "type": "git",
         "url": "ssh://git@github.com/hartmantis/nasty-secrets.git"
       },
