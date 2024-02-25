@@ -19,3 +19,12 @@ resource "porkbun_dns_record" "nasty_wildcard" {
   ttl     = 600
   notes   = "Wildcard DNS for all NAS services"
 }
+
+resource "porkbun_dns_record" "nasty_email_txt_verification" {
+  domain  = var.domain
+  name    = ""
+  type    = "MX"
+  content = var.mx_server
+  ttl     = 600
+  notes   = "Mail server for the domain"
+}
