@@ -10,6 +10,12 @@ variable "domain" {
 variable "ip_address" {
   description = "The IP address of our NAS"
 }
+variable "outside_name" {
+  description = "Hostname that'll point at a public IP for external access"
+}
+variable "outside_ip_address" {
+  description = "Public IP that the external access hostname will point to"
+}
 variable "mx_server" {
   description = "The mail server for the domain"
 }
