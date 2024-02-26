@@ -5,6 +5,11 @@ terraform {
       version = "~> 0.2"
     }
 
+    grafana = {
+      source  = "grafana/grafana"
+      version = "~> 2.12"
+    }
+
     pagerduty = {
       source  = "PagerDuty/pagerduty"
       version = "~> 3.6"
@@ -15,6 +20,11 @@ terraform {
 provider "porkbun" {
   api_key    = var.porkbun_api_key
   secret_key = var.porkbun_secret_key
+}
+
+provider "grafana" {
+  alias         = "cloud"
+  cloud_api_key = var.grafana_cloud_token
 }
 
 provider "pagerduty" {
