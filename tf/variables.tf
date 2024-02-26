@@ -20,6 +20,13 @@ variable "mx_server" {
   description = "The mail server for the domain"
 }
 
+variable "grafana_cloud_token" {
+  description = "Access Policy token for Grafana Cloud with the following scopes: accesspolicies:read|write|delete, stacks:read|write|delete"
+}
+variable "grafana_cloud_slug" {
+  description = "Name of the Grafana Cloud stack to manage (https://<slug>.grafana.net)"
+}
+
 variable "pagerduty_admin_email" {
   description = "The admin user's PagerDuty email address"
 }
