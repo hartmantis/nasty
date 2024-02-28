@@ -56,6 +56,6 @@ resource "grafana_cloud_access_policy" "logs_publisher" {
 resource "grafana_dashboard_public" "node_exporter_full" {
   provider = grafana.stack
 
-  dashboard_uid = "1860"
+  dashboard_uid = "rYdddlPWk"
   is_enabled    = true
 }
