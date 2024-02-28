@@ -26,7 +26,7 @@ resource "grafana_cloud_access_policy" "logs_publisher" {
 
   name = "logs-publisher"
   display_name = "Logs Publisher"
-  scopes = ["metrics:write"]
+  scopes = ["logs:write"]
 
   realm {
     type = "stack"
