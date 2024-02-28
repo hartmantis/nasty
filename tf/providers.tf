@@ -27,6 +27,11 @@ provider "grafana" {
   cloud_access_policy_token = var.grafana_cloud_token
 }
 
+provider "grafana" {
+  alias = "stack"
+  url = grafana_cloud_stack.main.url
+}
+
 provider "pagerduty" {
   token = var.pagerduty_api_key
 }
