@@ -30,6 +30,10 @@ variable "grafana_cloud_region" {
   description = "Region slug the Grafana Cloud stack will be located in"
   default     = "prod-us-west-0"
 }
+variable "grafana_dashboard_node_exporter_revision" {
+  description = "Version of the Node Exporter dashboard to install"
+  default     = "33"
+}
 
 variable "pagerduty_admin_email" {
   description = "The admin user's PagerDuty email address"
