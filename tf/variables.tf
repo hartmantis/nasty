@@ -26,6 +26,10 @@ variable "grafana_cloud_token" {
 variable "grafana_cloud_slug" {
   description = "Name of the Grafana Cloud stack to manage (https://<slug>.grafana.net)"
 }
+variable "grafana_cloud_region" {
+  description = "Region slug the Grafana Cloud stack will be located in"
+  default     = "prod-us-west-0"
+}
 
 variable "pagerduty_admin_email" {
   description = "The admin user's PagerDuty email address"
