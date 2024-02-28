@@ -1,4 +1,7 @@
-data "grafana_cloud_stack" "test" {
+resource "grafana_cloud_stack" "main" {
   provider = grafana.cloud
-  slug     = var.grafana_cloud_slug
+
+  name        = var.grafana_cloud_slug
+  slug        = var.grafana_cloud_slug
+  region_slug = var.grafana_cloud_region
 }
