@@ -60,5 +60,5 @@ data "http" "grafana_dashboard_node_exporter" {
 resource "grafana_dashboard" "node_exporter" {
   provider = grafana.stack
 
-  config_json = data.http.grafana_dashboard_node_exporter.body
+  config_json = data.http.grafana_dashboard_node_exporter.response_body
 }
