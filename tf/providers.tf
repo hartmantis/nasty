@@ -29,7 +29,7 @@ provider "grafana" {
 
 provider "grafana" {
   alias = "stack"
-  url = grafana_cloud_stack.main.url
+  url   = grafana_cloud_stack.main.url
 }
 
 provider "pagerduty" {
