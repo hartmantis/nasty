@@ -21,11 +21,15 @@
   };
 
   services.grafana-agent.settings = {
-    metrics.global.remote_write = [{
-      url = "\${METRICS_REMOTE_WRITE_URL}";
-      basic_auth.username = "\${METRICS_REMOTE_WRITE_USERNAME}";
-      basic_auth.password_file = "\${CREDENTIALS_DIRECTORY}/metrics_remote_write_password";
-    }];
+    metrics.global = {
+      remote_write = [{
+        url = "\${METRICS_REMOTE_WRITE_URL}";
+        basic_auth.username = "\${METRICS_REMOTE_WRITE_USERNAME}";
+        basic_auth.password_file = "\${CREDENTIALS_DIRECTORY}/metrics_remote_write_password";
+      }];
+
+      scrape_interval = "60s";
+    };
   };
 
   services.grafana-agent.enable = true;
