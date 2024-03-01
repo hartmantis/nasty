@@ -53,6 +53,20 @@ resource "grafana_cloud_access_policy" "logs_publisher" {
 # TODO: TF can manage the tokens if I can figure out how to have it feed them
 # into an Agenix secrets file.
 
+resource "grafana_contact_point" "main" {
+  name = "Main contact point for alerting"
+
+  email {
+    addresses = [var.grafana_alert_contact_email]
+    message   = "{{ template \"default.message\" .}}"
+    subject   = "{{ template \"default.title\" .}}"
+  }
+
+  pagerduty {
+    integration_key = pagerduty_service_integration.grafana_cloud.integration_key
+  }
+}
+
 data "http" "grafana_dashboard_node_exporter" {
   url = "https://grafana.com/api/dashboards/1860/revisions/${var.grafana_dashboard_node_exporter_revision}/download"
 }

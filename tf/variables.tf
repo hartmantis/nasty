@@ -34,6 +34,9 @@ variable "grafana_dashboard_node_exporter_revision" {
   description = "Version of the Node Exporter dashboard to install"
   default     = "33"
 }
+variable "grafana_alert_contact_email" {
+  description = "Email address for Grafana Cloud alerting"
+}
 
 variable "pagerduty_admin_email" {
   description = "The admin user's PagerDuty email address"
