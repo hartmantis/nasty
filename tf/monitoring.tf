@@ -54,6 +54,8 @@ resource "grafana_cloud_access_policy" "logs_publisher" {
 # into an Agenix secrets file.
 
 resource "grafana_contact_point" "main" {
+  provider = grafana.stack
+
   name = "Main contact point for alerting"
 
   email {
