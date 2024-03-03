@@ -38,6 +38,13 @@ variable "grafana_alert_contact_email" {
   description = "Email address for Grafana Cloud alerting"
 }
 
+variable "discord_token" {
+  description = "Token for connecting to the Discord API"
+}
+variable "discord_server_id" {
+  description = "ID of the Discord server we'll be sending alerts to"
+}
+
 variable "pagerduty_admin_email" {
   description = "The admin user's PagerDuty email address"
 }

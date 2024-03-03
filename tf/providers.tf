@@ -10,6 +10,11 @@ terraform {
       version = "~> 2.12"
     }
 
+    discord = {
+      source  = "Lucky3028/discord"
+      version = "~> 1.6"
+    }
+
     pagerduty = {
       source  = "PagerDuty/pagerduty"
       version = "~> 3.6"
@@ -25,6 +30,10 @@ provider "porkbun" {
 provider "grafana" {
   alias                     = "cloud"
   cloud_access_policy_token = var.grafana_cloud_token
+}
+
+provider "discord" {
+  token = var.discord_token
 }
 
 provider "grafana" {
