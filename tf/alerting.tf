@@ -1,3 +1,18 @@
+data "discord_server" "main" {
+  server_id = var.discord_server_id
+}
+
+resource "discord_category_channel" "notifications" {
+  name = "notifications"
+  server_id = data.discord_server.main.id
+}
+
+resource "discord_text_channel" "alerts" {
+  name = "alerts"
+  server_id = data.discord_server.main.id
+  category = discord_category_channel.notifications.id
+}
+
 # The user already exists just by virtue of setting up the PagerDuty account.
 data "pagerduty_user" "admin" {
   email = var.pagerduty_admin_email
