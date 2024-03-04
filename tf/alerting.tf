@@ -46,3 +46,7 @@ resource "pagerduty_service_integration" "grafana_cloud" {
   service = pagerduty_service.nasty.id
   type    = "events_api_v2_inbound_integration"
 }
+
+resource "grafana_folder" "alerts" {
+  title = "Alerts"
+}
