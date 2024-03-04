@@ -48,5 +48,7 @@ resource "pagerduty_service_integration" "grafana_cloud" {
 }
 
 resource "grafana_folder" "alerts" {
-  title = "Alerts"
+  provider = grafana.stack
+  
+  title    = "Alerts"
 }
