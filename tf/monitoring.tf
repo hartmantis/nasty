@@ -64,6 +64,11 @@ resource "grafana_contact_point" "main" {
     subject   = "{{ template \"default.title\" .}}"
   }
 
+  discord {
+    url                  = discord_webhook.grafana_alerts.url
+    use_discord_username = true
+  }
+
   pagerduty {
     integration_key = pagerduty_service_integration.grafana_cloud.integration_key
   }
