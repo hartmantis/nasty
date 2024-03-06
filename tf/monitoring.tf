@@ -74,6 +74,13 @@ resource "grafana_contact_point" "main" {
   }
 }
 
+resource "grafana_notification_policy" "main" {
+  provider = grafana.stack
+
+  contact_point = grafana_contact_point.main.name
+  group_by      = ["grafana_folder", "alertname"]
+}
+
 data "http" "grafana_dashboard_node_exporter" {
   url = "https://grafana.com/api/dashboards/1860/revisions/${var.grafana_dashboard_node_exporter_revision}/download"
 }
