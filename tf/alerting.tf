@@ -54,6 +54,8 @@ resource "grafana_folder" "alerts" {
 }
 
 resource "grafana_rule_group" "nasty_1m_rules" {
+  provider = grafana.stack
+
   name             = "NASty 1m Alerts"
   interval_seconds = 60
   folder_uid       = grafana_folder.alerts.uid
