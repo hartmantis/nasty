@@ -49,6 +49,85 @@ resource "pagerduty_service_integration" "grafana_cloud" {
 
 resource "grafana_folder" "alerts" {
   provider = grafana.stack
-  
-  title    = "Alerts"
+
+  title = "Alerts"
+}
+
+resource "grafana_rule_group" "nasty_1m_rules" {
+  name             = "NASty 1m Alerts"
+  interval_seconds = 60
+  folder_uid       = grafana_folder.alerts.uid
+
+  rule {
+    name      = "Not-Online ZFS Pools"
+    condition = "B"
+
+    data {
+      ref_id = "A"
+
+      relative_time_range {
+        from = 600
+        to   = 0
+      }
+
+      datasource_uid = "grafanacloud-prom"
+
+      model = jsonencode({
+        disableTextWrap     = false
+        editorMode          = "builder"
+        expr                = "sum(node_zfs_zpool_state{state!=\"online\"})"
+        fullMetaSearch      = false
+        includeNullMetadata = true
+        instant             = true
+        intervalMs          = 1000
+        legendFormat        = "__auto"
+        maxDataPoints       = 43200
+        range               = false
+        refId               = "A"
+        useBackend          = false
+      })
+    }
+
+    data {
+      ref_id = "B"
+
+      relative_time_range {
+        from = 600
+        to   = 0
+      }
+
+      datasource_uid = "__expr__"
+
+      model = jsonencode({
+        conditions = [
+          {
+            evaluator = {
+              params = [0]
+              type   = "gt"
+            }
+            operator = { type = "and" }
+            query = {
+              params = ["C"]
+            }
+            reducer = {
+              params = []
+              type   = "last"
+            }
+            type = "query"
+          }
+        ]
+        datasource = {
+          type = "__expr__"
+          uid  = "__expr__"
+        }
+        expression    = "A"
+        intervalMs    = 1000
+        maxDataPoints = 43200
+        refId         = "C"
+        type          = "threshold"
+      })
+    }
+
+    no_data_state = "Alerting"
+  }
 }

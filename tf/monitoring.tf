@@ -10,13 +10,13 @@ resource "grafana_cloud_stack_service_account" "tf" {
   provider   = grafana.cloud
   stack_slug = grafana_cloud_stack.main.slug
 
-  name       = "TF admin account"
-  role       = "Admin"
+  name = "TF admin account"
+  role = "Admin"
 }
 
 resource "grafana_cloud_stack_service_account_token" "tf" {
-  provider           = grafana.cloud
-  stack_slug         = grafana_cloud_stack.main.slug
+  provider   = grafana.cloud
+  stack_slug = grafana_cloud_stack.main.slug
 
   name               = "TF admin key"
   service_account_id = grafana_cloud_stack_service_account.tf.id
@@ -56,7 +56,7 @@ resource "grafana_cloud_access_policy" "logs_publisher" {
 resource "grafana_contact_point" "main" {
   provider = grafana.stack
 
-  name = "Main contact point for alerting"
+  name = "Admin Contact"
 
   email {
     addresses = [var.grafana_alert_contact_email]
