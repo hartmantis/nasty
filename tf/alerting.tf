@@ -63,6 +63,7 @@ resource "grafana_rule_group" "nasty_1m_rules" {
   rule {
     name      = "Not-Online ZFS Pools"
     condition = "B"
+    for       = "3m"
 
     data {
       ref_id = "A"
