@@ -25,7 +25,7 @@ resource "porkbun_dns_record" "external_access" {
   notes   = "External access point"
 }
 
-resource "porkbun_dns_record" "nasty_root_mx" {
+resource "porkbun_dns_record" "root_mx" {
   domain  = var.domain
   name    = ""
   type    = "MX"
