@@ -8,19 +8,6 @@ in {
   age.secrets."traefik-env".file = "${secrets}/services/traefik/env.age";
 
   services.traefik.staticConfigOptions = {
-    entryPoints = {
-      http = {
-        address = ":80";
-        http.redirections.entryPoint = {
-          to = "https";
-        };
-      };
-
-      https = {
-        address = ":443";
-      };
-    };
-
     certificatesResolvers = {
       letsencrypt = {
         acme = {
@@ -33,6 +20,30 @@ in {
         };
       };
     };
+
+    entryPoints = {
+      https = {
+        address = ":443";
+        http = {
+          tls = {
+            domains = [
+              {
+                main = variables.domain;
+                sans = [ "*.${variables.domain}" ];
+              }
+            ];
+            certresolver = "letsencrypt";
+          };
+        };
+      };
+
+      http = {
+        address = ":80";
+        http.redirections.entryPoint = {
+          to = "https";
+        };
+      };
+    };
   };
 
   services.traefik.dynamicConfigOptions = {
@@ -42,14 +53,8 @@ in {
       };
 
       routers = {
-        jellyfin-http = {
-          rule = "PathPrefix(`/`)";
-          entryPoints = [ "http" ];
-          service = "jellyfin";
-        };
-
         jellyfin-https = {
-          rule = "PathPrefix(`/`)";
+          rule = "PathPrefix(`/`) && !PathPrefix(`/health`) && !PathPrefix(`/metrics`)";
           entryPoints = [ "https" ];
           service = "jellyfin";
           tls = {
