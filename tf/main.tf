@@ -109,3 +109,5 @@ moved {
   from = grafana_dashboard.node_exporter
   to   = module.monitoring.grafana_dashboard.node_exporter
 }
+
+resource "terraform_data" "empty" {}
