@@ -1,50 +1,42 @@
-data "discord_server" "main" {
-  server_id = var.discord_server_id
-}
+# TODO: TF can manage the tokens if I can figure out how to have it feed them
+# into an Agenix secrets file.
 
-resource "discord_category_channel" "notifications" {
-  name      = "notifications"
-  server_id = data.discord_server.main.id
-}
+resource "grafana_contact_point" "main" {
+  provider = grafana.stack
 
-resource "discord_text_channel" "alerts" {
-  name      = "alerts"
-  server_id = data.discord_server.main.id
-  category  = discord_category_channel.notifications.id
-}
+  name = "Admin Contact"
 
-resource "discord_webhook" "grafana_alerts" {
-  channel_id = discord_text_channel.alerts.id
-  name       = "AlertBot"
-}
+  email {
+    addresses = [var.grafana_alert_contact_email]
+    message   = "{{ template \"default.message\" .}}"
+    subject   = "{{ template \"default.title\" .}}"
+  }
 
-# The user already exists just by virtue of setting up the PagerDuty account.
-data "pagerduty_user" "admin" {
-  email = var.pagerduty_admin_email
-}
+  discord {
+    url                  = discord_webhook.grafana_alerts.url
+    use_discord_username = true
+  }
 
-resource "pagerduty_escalation_policy" "default" {
-  name = "Default"
-
-  rule {
-    escalation_delay_in_minutes = 15
-    target {
-      type = "user_reference"
-      id   = data.pagerduty_user.admin.id
-    }
+  pagerduty {
+    integration_key = pagerduty_service_integration.grafana_cloud.integration_key
   }
 }
 
-resource "pagerduty_service" "nasty" {
-  name              = "NASty"
-  escalation_policy = pagerduty_escalation_policy.default.id
-  alert_creation    = "create_alerts_and_incidents"
+resource "grafana_notification_policy" "main" {
+  provider = grafana.stack
+
+  contact_point = grafana_contact_point.main.name
+  group_by      = ["grafana_folder", "alertname"]
 }
 
-resource "pagerduty_service_integration" "grafana_cloud" {
-  name    = "Grafana Cloud"
-  service = pagerduty_service.nasty.id
-  type    = "events_api_v2_inbound_integration"
+data "http" "grafana_dashboard_node_exporter" {
+  url = "https://grafana.com/api/dashboards/1860/revisions/${var.grafana_dashboard_node_exporter_revision}/download"
+}
+
+resource "grafana_dashboard" "node_exporter" {
+  provider = grafana.stack
+
+  config_json = data.http.grafana_dashboard_node_exporter.response_body
 }
 
 resource "grafana_folder" "alerts" {
