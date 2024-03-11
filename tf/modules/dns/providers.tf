@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     porkbun = {
-      source  = "cullenmcdermott/porkbun"
+      source = "cullenmcdermott/porkbun"
     }
   }
 }

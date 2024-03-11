@@ -39,8 +39,8 @@ provider "discord" {
 provider "grafana" {
   alias = "stack"
 
-  url  = grafana_cloud_stack.main.url
-  auth = grafana_cloud_stack_service_account_token.tf.key
+  url  = module.monitoring.grafana_cloud_stack_url
+  auth = module.monitoring.grafana_cloud_stack_service_account_token
 }
 
 provider "pagerduty" {
