@@ -29,7 +29,7 @@ in {
 
     entryPoints = {
       metrics = {
-        address = ":8081"
+        address = "localhost:8081";
       };
 
       https = {
