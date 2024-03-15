@@ -1,4 +1,4 @@
-{config, pkgs, ...}: let
+{config, lib, pkgs, ...}: let
   variables = {
     nixosVersion = builtins.getEnv "NIXOS_VERSION";
     rootDevice = builtins.getEnv "NIXOS_ROOT_DEVICE";
@@ -30,52 +30,10 @@
 
   svcName = "nixos-installer";
 in {
-  assertions = [
-    {
-      assertion = variables.nixosVersion != "";
-      message = "nixosVersion is empty!";
-    }
-    {
-      assertion = variables.rootDevice != "";
-      message = "rootDevice is empty!";
-    }
-    {
-      assertion = variables.hostName != "";
-      message = "hostName is empty!";
-    }
-    {
-      assertion = variables.domain != "";
-      message = "domain is empty!";
-    }
-    {
-      assertion = variables.hostId != "";
-      message = "hostId is empty!";
-    }
-    {
-      assertion = variables.ip != "";
-      message = "ip is empty!";
-    }
-    {
-      assertion = variables.defaultGateway != "";
-      message = "defaultGateway is empty!";
-    }
-    {
-      assertion = variables.dns != "";
-      message = "dns is empty!";
-    }
-    {
-      assertion = variables.bootstrapDeviceName != "";
-      message = "bootstrapDeviceName is empty!";
-    }
-    {
-      assertion = variables.adminUser != "";
-      message = "adminUser is empty!";
-    }
-    {
-      assertion = variables.adminSshPublicKey != "";
-      message = "adminSshPublicKey is empty!";
-    }
-  ];
+  assertions = lib.mapAttrsToList (key: value: {
+    assertion = value != "";
+    message = "${key} is empty!";
+  }) variables;
 
   environment.systemPackages = with pkgs; [
     (stdenv.mkDerivation rec {
