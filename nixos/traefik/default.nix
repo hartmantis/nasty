@@ -8,6 +8,12 @@ in {
   age.secrets."traefik-env".file = "${secrets}/services/traefik/env.age";
 
   services.traefik.staticConfigOptions = {
+    metrics = {
+      prometheus = {
+        entryPoint = "metrics";
+      };
+    };
+
     certificatesResolvers = {
       letsencrypt = {
         acme = {
@@ -22,6 +28,10 @@ in {
     };
 
     entryPoints = {
+      metrics = {
+        address = ":8081"
+      };
+
       https = {
         address = ":443";
         http = {
