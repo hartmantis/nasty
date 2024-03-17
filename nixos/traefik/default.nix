@@ -30,11 +30,11 @@ in {
 
     entryPoints = {
       metrics = {
-        address = "localhost:${ports.traefik.metrics}";
+        address = "localhost:${toString ports.traefik.metrics}";
       };
 
       https = {
-        address = ":${ports.traefik.https}";
+        address = ":${toString ports.traefik.https}";
         http = {
           tls = {
             domains = [
@@ -49,7 +49,7 @@ in {
       };
 
       http = {
-        address = ":${ports.traefik.http}";
+        address = ":${toString ports.traefik.http}";
         http.redirections.entryPoint = {
           to = "https";
         };
