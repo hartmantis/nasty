@@ -57,7 +57,7 @@ in {
 
         # Make sure generated files don't accidentally get committed to git.
         pushd $out/lib/nasty
-        git update-index --assume-unchanged nixos/hardware-configuration.nix nixos/variables/*.nix
+        git update-index --assume-unchanged nixos/hardware-configuration.nix nixos/variables/system.nix
         popd
       '';
     })

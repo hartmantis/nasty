@@ -1,5 +1,6 @@
 {config, pkgs, agenix, secrets, ...}: let
   variables = import ../variables/system.nix;
+  ports = import ../variables/ports.nix;
 in {
   environment.systemPackages = with pkgs; [
     traefik
@@ -29,11 +30,11 @@ in {
 
     entryPoints = {
       metrics = {
-        address = "localhost:8081";
+        address = "localhost:${ports.traefik.metrics}";
       };
 
       https = {
-        address = ":443";
+        address = ":${ports.traefik.https}";
         http = {
           tls = {
             domains = [
@@ -48,7 +49,7 @@ in {
       };
 
       http = {
-        address = ":80";
+        address = ":${ports.traefik.http}";
         http.redirections.entryPoint = {
           to = "https";
         };
@@ -88,5 +89,5 @@ in {
 
   services.traefik.enable = true;
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [ ports.http ports.https ];
 }
