@@ -1,5 +1,7 @@
-traefik = {
-  https = 443;
-  http = 80;
-  metrics = 8081;
-};
+{
+  traefik = {
+    https = 443;
+    http = 80;
+    metrics = 8081;
+  };
+}
