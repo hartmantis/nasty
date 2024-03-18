@@ -90,4 +90,8 @@ in {
   services.traefik.enable = true;
 
   networking.firewall.allowedTCPPorts = [ ports.traefik.http ports.traefik.https ];
+
+  imports = [
+    ./monitoring.nix
+  ];
 }
