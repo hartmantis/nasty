@@ -57,7 +57,7 @@ in {
 
         # Make sure generated files don't accidentally get committed to git.
         pushd $out/lib/nasty
-        git update-index --assume-unchanged nixos/hardware-configuration.nix nixos/variables/system.nix
+        git update-index --assume-unchanged nixos/variables/system.nix
         popd
       '';
     })
@@ -110,8 +110,6 @@ in {
 
       cp -r /nix/store/*-nasty-0.1.0/lib/nasty /mnt/etc/nixos/
       pushd /mnt/etc/nixos
-      # Use the generated hardware-configuration.nix.
-      mv hardware-configuration.nix nasty/nixos/
       ln -s nasty/nixos/flake.nix flake.nix
       ln -s nasty/nixos/flake.lock flake.lock
       ln -s nasty/nixos/hardware-configuration.nix hardware-configuration.nix
