@@ -6,6 +6,10 @@
     jellyfin-ffmpeg
   ];
 
+  imports = [
+    ./config.nix
+  ];
+
   services.jellyfin = {
     enable = true;
   };
