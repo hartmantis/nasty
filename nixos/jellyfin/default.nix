@@ -8,6 +8,7 @@
 
   imports = [
     ./config.nix
+    ./monitoring.nix
   ];
 
   services.jellyfin = {
