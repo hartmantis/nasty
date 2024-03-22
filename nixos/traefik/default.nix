@@ -59,29 +59,13 @@ in {
 
   services.traefik.dynamicConfigOptions = {
     http = {
-      services = {
-        jellyfin.loadBalancer.servers = [ { url = "http://127.0.0.1:${ports.jellyfin.web}"; } ];
-      };
-
-      routers = {
-        jellyfin-https = {
-          rule = "PathPrefix(`/`) && !PathPrefix(`/health`) && !PathPrefix(`/metrics`)";
-          entryPoints = [ "https" ];
-          service = "jellyfin";
-          tls = {
-            domains = [
-              {
-                main = variables.domain;
-                sans = [ "*.${variables.domain}" ];
-              }
-            ];
-            certresolver = "letsencrypt";
-          };
+      middlewares.forbidden = {
+        ipWhiteList = {
+          sourceRange = [ "127.0.0.1/32" ];
         };
       };
     };
   };
-
 
   systemd.services.traefik.serviceConfig = {
     EnvironmentFile = [ config.age.secrets.traefik-env.path ];
