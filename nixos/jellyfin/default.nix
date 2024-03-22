@@ -1,5 +1,6 @@
-{config, pkgs, ...}:
-{
+{config, pkgs, ...}: let
+  ports = import ../variables/ports.nix;
+in {
   environment.systemPackages = with pkgs; [
     jellyfin
     jellyfin-web
@@ -10,6 +11,23 @@
     ./config.nix
     ./monitoring.nix
   ];
+
+  services.traefik.dynamicConfigOptions.http.services.jellyfin = {
+    loadBalancer.servers = [ { url = "http://127.0.0.1:${toString ports.jellyfin.web}"; } ];
+  };
+
+  services.traefik.dynamicConfigOptions.http.routers.jellyfin = {
+    entryPoints = [ "https" ];
+    rule = "PathPrefix(`/`) && !PathPrefix(`/health`) && !PathPrefix(`/metrics`)";
+    service = "jellyfin";
+  };
+
+  services.traefik.dynamicConfigOptions.http.routers.jellyfin-metrics = {
+    entryPoints = [ "https" ];
+    rule = "PathPrefix(`/health`) || PathPrefix(`/metrics`)";
+    middlewares = [ "forbidden" ];
+    service = "jellyfin";
+  };
 
   services.jellyfin = {
     enable = true;
