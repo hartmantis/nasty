@@ -49,3 +49,17 @@ resource "grafana_cloud_access_policy" "logs_publisher" {
     identifier = grafana_cloud_stack.main.id
   }
 }
+
+resource "grafana_cloud_access_policy" "traces_publisher" {
+  provider = grafana.cloud
+  region   = var.grafana_cloud_region
+
+  name         = "traces-publisher"
+  display_name = "Traces Publisher"
+  scopes       = ["traces:write"]
+
+  realm {
+    type       = "stack"
+    identifier = grafana_cloud_stack.main.id
+  }
+}
