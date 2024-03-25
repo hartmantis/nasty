@@ -81,4 +81,8 @@ in {
       intel-compute-runtime
     ];
   };
+
+  imports = [
+    ./monitoring.nix
+  ];
 }
