@@ -40,7 +40,7 @@
     };
 
     traces.configs = [{
-      name = "traefik";
+      name = "default";
 
       remote_write = [{
         endpoint = "\${TRACES_REMOTE_WRITE_ENDPOINT}";
@@ -48,9 +48,7 @@
         basic_auth.password_file = "\${CREDENTIALS_DIRECTORY}/traces_remote_write_password";
       }];
 
-      receivers.jaeger = {
-        protocols = { grpc = {}; };
-      };
+      receivers.jaeger.protocols.thrift_compact = { };
     }];
   };
 
