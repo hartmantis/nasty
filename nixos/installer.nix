@@ -112,7 +112,6 @@ in {
       pushd /mnt/etc/nixos
       ln -s nasty/nixos/flake.nix flake.nix
       ln -s nasty/nixos/flake.lock flake.lock
-      ln -s nasty/nixos/hardware-configuration.nix hardware-configuration.nix
       popd
 
       nixos-install --no-root-passwd
