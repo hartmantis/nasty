@@ -1,7 +1,7 @@
-{config, pkgs, ...}: let
-  variables = import ../variables/system.nix;
+{config, pkgs, variables, ...}: let
+  vars = import variables;
 in {
-  system.stateVersion = variables.nixosVersion;
+  system.stateVersion = vars.nixosVersion;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Copy of what ends up in a default configuration.nix.
@@ -14,19 +14,19 @@ in {
 
   time.timeZone = "Etc/UTC";
 
-  networking.hostName = variables.hostName;
-  networking.domain = variables.domain;
-  networking.hostId = variables.hostId;
+  networking.hostName = vars.hostName;
+  networking.domain = vars.domain;
+  networking.hostId = vars.hostId;
 
   networking.interfaces.eno1.ipv4.addresses = [
     {
-      address = variables.ip;
+      address = vars.ip;
       prefixLength = 24;
     }
   ];
 
-  networking.defaultGateway = variables.defaultGateway;
-  networking.nameservers = [ variables.dns ];
+  networking.defaultGateway = vars.defaultGateway;
+  networking.nameservers = [ vars.dns ];
 
   services.openssh = {
     enable = true;
@@ -40,17 +40,17 @@ in {
     gid = 1000;
   };
 
-  users.users."${variables.adminUser}" = {
+  users.users."${vars.adminUser}" = {
     isNormalUser = true;
     uid = 1000;
     description = "Primary admin user";
     extraGroups = [ "wheel" "admins" ];
-    openssh.authorizedKeys.keys = [ variables.adminSshPublicKey ];
+    openssh.authorizedKeys.keys = [ vars.adminSshPublicKey ];
   };
 
   security.sudo.extraRules = [
     {
-      users = [ variables.adminUser ];
+      users = [ vars.adminUser ];
       commands = [
         {
           command = "ALL";

@@ -11,21 +11,6 @@
     bootstrapDeviceName = builtins.getEnv "NIXOS_BOOTSTRAP_DEVICE_NAME";
     adminUser = builtins.getEnv "NIXOS_ADMIN_USER";
     adminSshPublicKey = builtins.getEnv "NIXOS_ADMIN_SSH_PUBLIC_KEY";
-
-    # Template files:
-    system = pkgs.substituteAll {
-      src = ./variable-templates/system.template;
-      nixosVersion = variables.nixosVersion;
-      hostName = variables.hostName;
-      domain = variables.domain;
-      hostId = variables.hostId;
-      ip = variables.ip;
-      defaultGateway = variables.defaultGateway;
-      dns = variables.dns;
-      adminUser = variables.adminUser;
-      adminSshPublicKey = variables.adminSshPublicKey;
-      rootDevice = variables.rootDevice;
-    };
   };
 
   svcName = "nixos-installer";
@@ -50,15 +35,19 @@ in {
         chmod -R +w $out
         # And puts the temporary token in the Git config.
         sed -i -r '/^\s+extraheader/d' $out/lib/nasty/.git/config
+      '';
+    })
 
-        # Drop in templates we've rendered from builder-fed variables.
-        mkdir -p $out/lib/nasty/nixos/variables
-        cp ${variables.system} $out/lib/nasty/nixos/variables/system.nix
-
-        # Make sure generated files don't accidentally get committed to git.
-        pushd $out/lib/nasty
-        git update-index --assume-unchanged nixos/variables/system.nix
-        popd
+    (stdenv.mkDerivation rec {
+      name = "nasty-variables-${version}";
+      version = "0.1.0";
+      dontFixup = true;
+      unpackPhase = "echo";
+      installPhase = ''
+        mkdir -p $out/lib/nasty-variables
+        echo "{" > $out/lib/nasty-variables/default.nix
+        ${lib.concatStringsSep "\n" (lib.mapAttrsToList (key: val: ''echo "  ${key} = \"${val}\";" >> $out/lib/nasty-variables/default.nix'') variables)}
+        echo "}" >> $out/lib/nasty-variables/default.nix
       '';
     })
   ];
@@ -109,6 +98,7 @@ in {
       nixos-generate-config --root /mnt
 
       cp -r /nix/store/*-nasty-0.1.0/lib/nasty /mnt/etc/nixos/
+      cp -r /nix/store/*-nasty-variables-0.1.0/lib/nasty-variables /mnt/etc/nixos/
       pushd /mnt/etc/nixos
       ln -s nasty/nixos/flake.nix flake.nix
       ln -s nasty/nixos/flake.lock flake.lock

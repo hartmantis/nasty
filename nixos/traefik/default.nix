@@ -1,5 +1,5 @@
-{config, pkgs, agenix, secrets, ...}: let
-  variables = import ../variables/system.nix;
+{config, pkgs, agenix, secrets, variables, ...}: let
+  vars = import variables;
   ports = import ../variables/ports.nix;
 in {
   environment.systemPackages = with pkgs; [
@@ -18,7 +18,7 @@ in {
     certificatesResolvers = {
       letsencrypt = {
         acme = {
-          email = "letsencrypt@${variables.domain}";
+          email = "letsencrypt@${vars.domain}";
           storage = "${config.services.traefik.dataDir}/acme.json";
           dnsChallenge = {
             provider = "porkbun";
@@ -39,8 +39,8 @@ in {
           tls = {
             domains = [
               {
-                main = variables.domain;
-                sans = [ "*.${variables.domain}" ];
+                main = vars.domain;
+                sans = [ "*.${vars.domain}" ];
               }
             ];
             certresolver = "letsencrypt";
