@@ -7,18 +7,23 @@
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
+    variables = {
+      url = "path:/etc/nixos/nasty-variables";
+      flake = false;
+    };
+
     secrets = {
       url = "git+ssh://git@github.com/hartmantis/nasty-secrets.git";
       flake = false;
     };
   };
 
-  outputs = { self, nixpkgs, agenix, secrets } @inputs: let
-    variables = import ./variables/system.nix;
+  outputs = { self, nixpkgs, agenix, variables, secrets } @inputs: let
+    vars = import variables;
     system = "x86_64-linux";
   in {
     nixosConfigurations = {
-      "${variables.hostName}" = nixpkgs.lib.nixosSystem {
+      "${vars.hostName}" = nixpkgs.lib.nixosSystem {
         modules = [
           agenix.nixosModules.default
           ./hardware-configuration.nix
@@ -31,6 +36,7 @@
 
         specialArgs = {
           inherit inputs;
+          inherit variables;
           inherit secrets;
         };
       };
