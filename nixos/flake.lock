@@ -68,11 +68,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1711163522,
-        "narHash": "sha256-YN/Ciidm+A0fmJPWlHBGvVkcarYWSC+s3NTPk/P+q3c=",
+        "lastModified": 1711523803,
+        "narHash": "sha256-UKcYiHWHQynzj6CN/vTcix4yd1eCu1uFdsuarupdCQQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "44d0940ea560dee511026a53f0e2e2cde489b4d4",
+        "rev": "2726f127c15a4cc9810843b96cad73c7eb39e443",
         "type": "github"
       },
       "original": {
@@ -85,7 +85,8 @@
       "inputs": {
         "agenix": "agenix",
         "nixpkgs": "nixpkgs",
-        "secrets": "secrets"
+        "secrets": "secrets",
+        "variables": "variables"
       }
     },
     "secrets": {
@@ -117,6 +118,19 @@
         "owner": "nix-systems",
         "repo": "default",
         "type": "github"
+      }
+    },
+    "variables": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1711603999,
+        "narHash": "sha256-xEBzSCB5rwoM90xE1JNUSVw7ONbr3ZD5Zw1FHnBmFE0=",
+        "path": "/etc/nixos/nasty-variables",
+        "type": "path"
+      },
+      "original": {
+        "path": "/etc/nixos/nasty-variables",
+        "type": "path"
       }
     }
   },
