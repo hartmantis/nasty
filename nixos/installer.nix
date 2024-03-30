@@ -95,8 +95,6 @@ in {
       mkdir -p /mnt/boot
       mount /dev/disk/by-label/boot /mnt/boot
 
-      nixos-generate-config --root /mnt
-
       cp -r /nix/store/*-nasty-0.1.0/lib/nasty /mnt/etc/nixos/
       cp -r /nix/store/*-nasty-variables-0.1.0/lib/nasty-variables /mnt/etc/nixos/
       pushd /mnt/etc/nixos
