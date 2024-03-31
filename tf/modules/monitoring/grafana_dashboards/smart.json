@@ -137,7 +137,7 @@
       "tableColumn": "Value",
       "targets": [
         {
-          "expr": "sum(smartmon_device_smart_healthy{instance=~\"$instance\"})-sum(smartmon_device_smart_healthy{instance=~\"$instance\"})",
+          "expr": "count(smartctl_device_smart_status{instance=\"$instance\"}) - sum(smartctl_device_smart_status{instance=\"$instance\"})",
           "format": "table",
           "interval": "",
           "intervalFactor": 2,
@@ -230,7 +230,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum( smartmon_reallocate_nand_blk_cnt_raw_value ) +\nsum( smartmon_reallocated_sector_ct_raw_value ) +\nsum( smartmon_reallocated_event_count_raw_value ) +\nsum( smartmon_raw_read_error_rate_raw_value ) +\nsum( smartmon_current_pending_sector_raw_value ) +\nsum( smartmon_offline_uncorrectable_raw_value ) +\nsum( smartmon_udma_crc_error_count_raw_value ) +\nsum( smartmon_seek_error_rate_raw_value ) +\nsum( smartmon_spin_retry_count_raw_value ) +\nsum( smartmon_multi_zone_error_rate_raw_value )",
+          "expr": "sum(smartmon_reallocate_nand_blk_cnt_raw_value) + sum( smartmon_reallocated_sector_ct_raw_value) + sum(smartmon_reallocated_event_count_raw_value) + sum(smartmon_raw_read_error_rate_raw_value) + sum(smartmon_current_pending_sector_raw_value) + sum(smartmon_offline_uncorrectable_raw_value) + sum(smartmon_udma_crc_error_count_raw_value) + sum(smartmon_seek_error_rate_raw_value) + sum(smartmon_spin_retry_count_raw_value) + sum(smartmon_multi_zone_error_rate_raw_value)",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "B"
@@ -380,12 +380,12 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "avg(smartmon_temperature_celsius_raw_value{ instance=~\"$instance\", disk=~\"$disk\" }) by (instance, disk)",
+          "expr": "avg(smartctl_device_temperature{instance=\"$instance\", device=\"$device\"}) by (instance, device)",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 4,
-          "legendFormat": "{{disk}}",
+          "legendFormat": "{{device}}",
           "refId": "A"
         }
       ],
@@ -571,7 +571,7 @@
       ],
       "targets": [
         {
-          "expr": "smartmon_temperature_celsius_threshold{instance=~\"$instance\", disk=~\"$disk\"}",
+          "expr": "smartctl_device_attribute{instance=\"$instance\", device=\"$device\", attribute_name=\"Temperature_Celsius\", attribute_value_type=\"thresh\"}",
           "format": "table",
           "instant": true,
           "intervalFactor": 1,
@@ -632,11 +632,11 @@
       "pluginVersion": "6.2.5",
       "targets": [
         {
-          "expr": "smartmon_temperature_celsius_raw_value{ instance=~\"$instance\", disk=~\"$disk\" }",
+          "expr": "smartctl_device_temperature{instance=\"$instance\", device=\"$device\" }",
           "format": "time_series",
           "instant": false,
           "intervalFactor": 1,
-          "legendFormat": "{{ disk }}",
+          "legendFormat": "{{ device }}",
           "refId": "A"
         }
       ],
@@ -714,11 +714,11 @@
       "pluginVersion": "6.2.5",
       "targets": [
         {
-          "expr": "smartmon_power_on_hours_raw_value{ disk=~\"$disk\", instance=~\"$instance\" }",
+          "expr": "smartctl_power_on_seconds{instance=\"$instance\", device=\"$device\"}",
           "format": "time_series",
           "instant": false,
           "intervalFactor": 2,
-          "legendFormat": " {{disk}}",
+          "legendFormat": " {{device}}",
           "refId": "A"
         }
       ],
@@ -774,10 +774,10 @@
       "pluginVersion": "6.2.5",
       "targets": [
         {
-          "expr": "smartmon_power_cycle_count_raw_value{ instance=~\"$instance\", disk=~\"$disk\"}",
+          "expr": "smartctl_device_power_cycle_count{instance=\"$instance\", device=\"$device\"}",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{disk}}",
+          "legendFormat": "{{device}}",
           "refId": "A"
         }
       ],
@@ -851,10 +851,10 @@
       "pluginVersion": "6.2.5",
       "targets": [
         {
-          "expr": "smartmon_percent_lifetime_remain_raw_value{ instance=~\"$instance\", disk=~\"$disk\"}",
+          "expr": "smartctl_device_attribute{instance=\"$instance\", device=\"$device\", attribute_name=\"Load_Cycle_Count\", attribute_value_type=\"raw\"} / smartctl_device_attribute{instance=\"$instance\", device=\"$device\", attribute_name=\"Load_Cycle_Count\", attribute_value_type=\"thresh\"}",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{disk}}",
+          "legendFormat": "{{device}}",
           "refId": "A"
         }
       ],
@@ -927,10 +927,10 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "smartmon_total_host_sector_write_raw_value{ instance=~\"$instance\", disk=~\"$disk\"}*4096/1024/1024/1024",
+          "expr": "smartctl_device_attribute{instance=\"$instance\", device=\"$device\", attribute_name=\"Total_LBAs_Written\"} * 4096/1024/1024/1024",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{disk}}",
+          "legendFormat": "{{device}}",
           "refId": "A"
         }
       ],
@@ -1011,7 +1011,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "smartmon_spin_up_time_raw_value",
+          "expr": "smartctl_device_attribute{instance=\"$instance\", attribute_name=\"Spin_Up_Time\"}",
           "format": "time_series",
           "instant": false,
           "intervalFactor": 1,
@@ -1107,10 +1107,10 @@
       "pluginVersion": "6.2.5",
       "targets": [
         {
-          "expr": "smartmon_power_off_retract_count_raw_value{ instance=~\"$instance\", disk=~\"$disk\"}",
+          "expr": "smartctl_device_attribute{instance=\"$instance\", device=\"$device\", attribute_name=\"Power-Off_Retract_Count\"}",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{disk}}",
+          "legendFormat": "{{device}}",
           "refId": "A"
         }
       ],
@@ -1168,7 +1168,7 @@
       "pluginVersion": "6.2.5",
       "targets": [
         {
-          "expr": "smartmon_start_stop_count_raw_value { instance=~\"$instance\", disk=~\"$disk\" }",
+          "expr": "smartctl_device_attribute{instance=\"$instance\", device=\"$device\", attribute_name=\"Start_Stop_Count\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{disk}}",
@@ -1228,10 +1228,10 @@
       "pluginVersion": "6.2.5",
       "targets": [
         {
-          "expr": "smartmon_load_cycle_count_raw_value{ instance=~\"$instance\", disk=~\"$disk\"}",
+          "expr": "smartctl_device_attribute{instance=\"$instance\", device=~\"$device\", attribute_name=\"Load_Cycle_Count\"}",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{disk}}",
+          "legendFormat": "{{device}}",
           "refId": "A"
         }
       ],
@@ -1382,7 +1382,7 @@
       ],
       "targets": [
         {
-          "expr": "smartmon_device_info",
+          "expr": "smartctl_device",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1418,7 +1418,7 @@
         "multi": true,
         "name": "instance",
         "options": [],
-        "query": "label_values(smartmon_smartctl_version, instance)",
+        "query": "label_values(smartctl_version, instance)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1433,14 +1433,14 @@
         "allValue": null,
         "current": {},
         "datasource": "${DS_PROMETHEUS}",
-        "definition": "label_values(smartmon_device_info, device_model)",
+        "definition": "label_values(smartctl_device, model_name)",
         "hide": 2,
         "includeAll": true,
         "label": null,
         "multi": true,
         "name": "device_model",
         "options": [],
-        "query": "label_values(smartmon_device_info, device_model)",
+        "query": "label_values(smartctl_device, model_name)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1455,14 +1455,14 @@
         "allValue": null,
         "current": {},
         "datasource": "${DS_PROMETHEUS}",
-        "definition": "label_values(smartmon_device_info, disk)",
+        "definition": "label_values(smartctl_device, device)",
         "hide": 0,
         "includeAll": true,
         "label": null,
         "multi": true,
-        "name": "disk",
+        "name": "device",
         "options": [],
-        "query": "label_values(smartmon_device_info, disk)",
+        "query": "label_values(smartctl_device, device)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
