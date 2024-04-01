@@ -41,7 +41,7 @@ variable "grafana_cloud_region" {
 }
 variable "grafana_dashboard_node_exporter_revision" {
   description = "Version of the Node Exporter dashboard to install"
-  default     = "33"
+  default     = "36"
 }
 variable "grafana_alert_contact_email" {
   description = "Email address for Grafana Cloud alerting"
