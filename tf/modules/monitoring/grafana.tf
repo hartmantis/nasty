@@ -29,16 +29,6 @@ resource "grafana_notification_policy" "main" {
   group_by      = ["grafana_folder", "alertname"]
 }
 
-data "http" "grafana_dashboard_node_exporter" {
-  url = "https://grafana.com/api/dashboards/1860/revisions/${var.grafana_dashboard_node_exporter_revision}/download"
-}
-
-resource "grafana_dashboard" "node_exporter" {
-  provider = grafana.stack
-
-  config_json = data.http.grafana_dashboard_node_exporter.response_body
-}
-
 resource "grafana_folder" "alerts" {
   provider = grafana.stack
 
