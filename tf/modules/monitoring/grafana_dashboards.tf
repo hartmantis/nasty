@@ -12,7 +12,7 @@ resource "grafana_library_panel" "node_exporter" {
   provider = grafana.stack
 
   for_each   = {
-    for panel in jsondecode(data.http.grafana_dashboard_node_exporter.response_body).panels : panel.title => panel
+    for panel in jsondecode(data.http.grafana_dashboard_node_exporter.response_body).panels : panel.title => panel if panel.type != "row"
   }
   name       = each.key
   model_json = jsonencode(each.value)
