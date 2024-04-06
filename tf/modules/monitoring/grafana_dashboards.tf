@@ -24,7 +24,6 @@ resource "grafana_dashboard" "node_info" {
   config_json = templatefile(
     "${path.module}/grafana_dashboards/node_info.json.tftpl",
     {
-      quick_cpu_mem_disk = grafana_library_panel.node_exporter["Quick CPU / Mem / Disk"].panel_id
       pressure = grafana_library_panel.node_exporter["Pressure"].panel_id
       cpu_busy = grafana_library_panel.node_exporter["CPU Busy"].panel_id
       sys_load = grafana_library_panel.node_exporter["Sys Load"].panel_id
