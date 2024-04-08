@@ -264,7 +264,7 @@
           "type": "prometheus",
           "uid": "$${datasource}"
         },
-        "definition": "label_values(node_uname_info{job=\"$job\"}, instance)",
+        "definition": "label_values(node_uname_info{job=\"$job\"}, node)",
         "hide": 0,
         "includeAll": false,
         "label": "Host",
@@ -272,7 +272,7 @@
         "name": "node",
         "options": [],
         "query": {
-          "query": "label_values(node_uname_info{job=\"$job\"}, instance)",
+          "query": "label_values(node_uname_info{job=\"$job\"}, node)",
           "refId": "Prometheus-node-Variable-Query"
         },
         "refresh": 1,
