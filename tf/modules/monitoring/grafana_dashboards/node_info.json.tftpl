@@ -227,36 +227,6 @@
       {
         "current": {
           "selected": false,
-          "text": "integrations/node_exporter",
-          "value": "integrations/node_exporter"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "$${datasource}"
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": false,
-        "label": "Job",
-        "multi": false,
-        "name": "job",
-        "options": [],
-        "query": {
-          "query": "label_values(node_uname_info, job)",
-          "refId": "Prometheus-job-Variable-Query"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "current": {
-          "selected": false,
           "text": "default",
           "value": "default"
         },
@@ -264,7 +234,7 @@
           "type": "prometheus",
           "uid": "$${datasource}"
         },
-        "definition": "label_values(node_uname_info{job=\"$job\"}, instance)",
+        "definition": "label_values(node_uname_info, node)",
         "hide": 0,
         "includeAll": false,
         "label": "Host",
@@ -272,7 +242,7 @@
         "name": "node",
         "options": [],
         "query": {
-          "query": "label_values(node_uname_info{job=\"$job\"}, instance)",
+          "query": "label_values(node_uname_info, node)",
           "refId": "Prometheus-node-Variable-Query"
         },
         "refresh": 1,

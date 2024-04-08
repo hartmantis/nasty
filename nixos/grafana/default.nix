@@ -1,5 +1,6 @@
-{config, pkgs, agenix, secrets, ...}:
-{
+{config, pkgs, agenix, variables, secrets, ...}: let
+  vars = import variables;
+in {
   environment.systemPackages = with pkgs; [
     grafana-agent
   ];
@@ -37,6 +38,10 @@
       }];
 
       scrape_interval = "60s";
+
+      external_labels = {
+        node = "${vars.hostName}.${vars.domain}";
+      };
     };
 
     traces.configs = [{
