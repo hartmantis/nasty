@@ -8,7 +8,15 @@ locals {
   panels_updated = {
     for panel in local.panels_orig : panel.title => merge(
       panel,
-      { targets = [for target in panel.targets : merge(target, { expr = replace(target.expr, "instance", "node") })] }
+      {
+        targets = [
+          for target in panel.targets : merge(
+            target, {
+              expr = replace(replace(target.expr, "instance", "node"), "$job", "integrations/node_exporter")
+            }
+          )
+        ]
+      }
     )
   }
 }
