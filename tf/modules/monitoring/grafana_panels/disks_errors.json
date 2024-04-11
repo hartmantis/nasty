@@ -1,0 +1,72 @@
+{
+  "datasource": {
+    "type": "prometheus",
+    "uid": "${DS_PROMETHEUS}"
+  },
+  "description": "Disks combined error count",
+  "fieldConfig": {
+    "defaults": {
+      "mappings": [
+        {
+          "options": {
+            "match": "null",
+            "result": {
+              "text": "N/A"
+            }
+          },
+          "type": "special"
+        }
+      ],
+      "thresholds": {
+        "mode": "absolute",
+        "steps": [
+          {
+            "color": "#299c46",
+            "value": null
+          },
+          {
+            "color": "rgba(237, 129, 40, 0.89)",
+            "value": 1
+          },
+          {
+            "color": "#d44a3a",
+            "value": 10
+          }
+        ]
+      },
+      "unit": "none"
+    },
+    "overrides": []
+  },
+  "maxDataPoints": 100,
+  "options": {
+    "reduceOptions": {
+      "values": false,
+      "calcs": [
+        "mean"
+      ],
+      "fields": ""
+    },
+    "orientation": "horizontal",
+    "textMode": "auto",
+    "wideLayout": true,
+    "colorMode": "background",
+    "graphMode": "none",
+    "justifyMode": "auto",
+    "showPercentChange": false
+  },
+  "targets": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "expr": "sum(smartctl_device_attribute{node=\"$node\", attribute_name=\"Reallocated_Sector_Ct\"}) + sum(smartctl_device_attribute{node=\"$node\", attribute_name=\"Raw_Read_Error_rate\"}) + sum(smartctl_device_attribute{node=\"$node\", attribute_name=\"Current_Pending_Sector\"}) + sum(smartctl_device_attribute{node=\"$node\", attribute_name=\"Offline_Uncorrectable\"}) + sum(smartctl_device_attribute{node=\"$node\", attribute_name=\"UDMA_CRC_Error_Count\"}) + sum(smartctl_device_attribute{node=\"$node\", attribute_name=\"Seek_Error_Rate\"}) + sum(smartctl_device_attribute{node=\"$node\", attribute_name=\"Spin_Retry_Count\"})",
+      "format": "time_series",
+      "intervalFactor": 1,
+      "refId": "A"
+    }
+  ],
+  "title": "Disk Errors",
+  "type": "stat"
+}
