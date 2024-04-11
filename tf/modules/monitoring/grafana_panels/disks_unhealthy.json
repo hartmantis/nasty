@@ -1,7 +1,7 @@
 {
   "datasource": {
     "type": "prometheus",
-    "uid": "${DS_PROMETHEUS}"
+    "uid": "${datasource}"
   },
   "description": "Number of disks in an unhealthy state",
   "fieldConfig": {
@@ -58,7 +58,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${datasource}"
       },
       "editorMode": "code",
       "expr": "sum(smartctl_device_smart_status{node=\"$node\"}) - count(smartctl_device_smart_status{node=\"$node\"})",

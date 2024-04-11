@@ -1,14 +1,14 @@
 {
   "datasource": {
     "type": "prometheus",
-    "uid": "${DS_PROMETHEUS}"
+    "uid": "${datasource}"
   },
   "title": "ZFS Pool Status",
   "targets": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${datasource}"
       },
       "editorMode": "code",
       "exemplar": false,

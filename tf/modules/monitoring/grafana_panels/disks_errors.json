@@ -1,7 +1,7 @@
 {
   "datasource": {
     "type": "prometheus",
-    "uid": "${DS_PROMETHEUS}"
+    "uid": "${datasource}"
   },
   "description": "Disks combined error count",
   "fieldConfig": {
@@ -59,7 +59,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${datasource}"
       },
       "expr": "sum(smartctl_device_attribute{node=\"$node\", attribute_name=\"Reallocated_Sector_Ct\"}) + sum(smartctl_device_attribute{node=\"$node\", attribute_name=\"Raw_Read_Error_rate\"}) + sum(smartctl_device_attribute{node=\"$node\", attribute_name=\"Current_Pending_Sector\"}) + sum(smartctl_device_attribute{node=\"$node\", attribute_name=\"Offline_Uncorrectable\"}) + sum(smartctl_device_attribute{node=\"$node\", attribute_name=\"UDMA_CRC_Error_Count\"}) + sum(smartctl_device_attribute{node=\"$node\", attribute_name=\"Seek_Error_Rate\"}) + sum(smartctl_device_attribute{node=\"$node\", attribute_name=\"Spin_Retry_Count\"})",
       "format": "time_series",
