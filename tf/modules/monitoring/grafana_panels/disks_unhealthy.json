@@ -1,0 +1,76 @@
+{
+  "datasource": {
+    "type": "prometheus",
+    "uid": "${DS_PROMETHEUS}"
+  },
+  "description": "Number of disks in an unhealthy state",
+  "fieldConfig": {
+    "defaults": {
+      "mappings": [
+        {
+          "options": {
+            "match": "null",
+            "result": {
+              "text": "null"
+            }
+          },
+          "type": "special"
+        }
+      ],
+      "thresholds": {
+        "mode": "absolute",
+        "steps": [
+          {
+            "color": "#299c46",
+            "value": null
+          },
+          {
+            "color": "#E02F44",
+            "value": 1
+          },
+          {
+            "color": "#d44a3a"
+          }
+        ]
+      },
+      "unit": "none"
+    },
+    "overrides": []
+  },
+  "maxDataPoints": 100,
+  "options": {
+    "reduceOptions": {
+      "values": false,
+      "calcs": [
+        "mean"
+      ],
+      "fields": "/^Value$/"
+    },
+    "orientation": "horizontal",
+    "textMode": "auto",
+    "wideLayout": true,
+    "colorMode": "background",
+    "graphMode": "none",
+    "justifyMode": "auto",
+    "showPercentChange": false
+  },
+  "targets": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "editorMode": "code",
+      "expr": "sum(smartctl_device_smart_status{node=\"$node\"}) - count(smartctl_device_smart_status{node=\"$node\"})",
+      "format": "table",
+      "interval": "",
+      "intervalFactor": 2,
+      "legendFormat": "__auto",
+      "range": true,
+      "refId": "A"
+    }
+  ],
+  "title": "Unhealthy Disks",
+  "type": "stat",
+  "interval": ""
+}

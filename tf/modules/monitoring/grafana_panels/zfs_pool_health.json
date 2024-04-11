@@ -1,0 +1,78 @@
+{
+  "datasource": {
+    "type": "prometheus",
+    "uid": "${DS_PROMETHEUS}"
+  },
+  "title": "ZFS Pool Status",
+  "targets": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "editorMode": "code",
+      "exemplar": false,
+      "expr": "floor(sum(node_zfs_zpool_state{node=\"$node\", state=\"online\"}) / sum(node_zfs_zpool_state{node=\"$node\"}))",
+      "format": "time_series",
+      "instant": true,
+      "intervalFactor": 1,
+      "range": false,
+      "refId": "A",
+      "step": 240
+    }
+  ],
+  "options": {
+    "reduceOptions": {
+      "values": false,
+      "calcs": [
+        "lastNotNull"
+      ],
+      "fields": ""
+    },
+    "orientation": "auto",
+    "textMode": "auto",
+    "wideLayout": true,
+    "colorMode": "value",
+    "graphMode": "area",
+    "justifyMode": "auto",
+    "showPercentChange": false
+  },
+  "fieldConfig": {
+    "defaults": {
+      "mappings": [
+        {
+          "type": "value",
+          "options": {
+            "0": {
+              "text": "FAILURE",
+              "index": 1
+            },
+            "1": {
+              "text": "OK",
+              "index": 0
+            }
+          }
+        }
+      ],
+      "thresholds": {
+        "mode": "absolute",
+        "steps": [
+          {
+            "color": "red",
+            "value": null
+          },
+          {
+            "color": "green",
+            "value": 1
+          }
+        ]
+      },
+      "color": {
+        "mode": "thresholds"
+      }
+    },
+    "overrides": []
+  },
+  "description": "ZFS Pool Status",
+  "type": "stat"
+}
