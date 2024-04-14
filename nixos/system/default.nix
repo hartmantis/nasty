@@ -8,9 +8,14 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   # /Copy
+
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.devNodes = "/dev/disk/by-partlabel";
   boot.zfs.extraPools = [ "data" ];
+  servies.zfs.autoScrub = {
+    enable = true;
+    interval = "*-01,04,07,10-01 07:00:00";
+  };
 
   time.timeZone = "Etc/UTC";
 
