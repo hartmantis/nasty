@@ -13,7 +13,7 @@ in {
   boot.zfs.devNodes = "/dev/disk/by-partlabel";
   boot.zfs.extraPools = [ "data" ];
   servies.zfs.autoScrub = {
-    enable = true;
+    enable = false;
     interval = "*-01,04,07,10-01 07:00:00";
   };
 
