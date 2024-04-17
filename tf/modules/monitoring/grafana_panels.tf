@@ -12,6 +12,20 @@ resource "grafana_library_panel" "disks_errors" {
   model_json = file("${path.module}/grafana_panels/disks_errors.json")
 }
 
+resource "grafana_library_panel" "zfs_pool_capacity" {
+  provider = grafana.stack
+  
+  name       = "ZFS Pool Capacity"
+  model_json = file("${path.module}/grafana_panels/zfs_pool_capacity.json")
+}
+
+resource "grafana_library_panel" "zfs_pool_storage_used" {
+  provider = grafana.stack
+  
+  name       = "ZFS Pool Storage Used"
+  model_json = file("${path.module}/grafana_panels/zfs_pool_storage_used.json")
+}
+
 resource "grafana_library_panel" "zfs_pool_health" {
   provider = grafana.stack
 

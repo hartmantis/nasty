@@ -1,0 +1,62 @@
+{
+  "datasource": {
+    "uid": "${datasource}",
+    "type": "prometheus"
+  },
+  "title": "ZPool Total",
+  "targets": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "editorMode": "code",
+      "exemplar": false,
+      "expr": "node_filesystem_size_bytes{node=\"$node\", mountpoint=\"/data\", fstype=\"zfs\"}",
+      "format": "time_series",
+      "hide": false,
+      "instant": true,
+      "intervalFactor": 1,
+      "range": false,
+      "refId": "A",
+      "step": 240
+    }
+  ],
+  "options": {
+    "reduceOptions": {
+      "values": false,
+      "calcs": [
+        "lastNotNull"
+      ],
+      "fields": ""
+    },
+    "orientation": "horizontal",
+    "textMode": "auto",
+    "wideLayout": true,
+    "colorMode": "none",
+    "graphMode": "none",
+    "justifyMode": "auto",
+    "showPercentChange": false
+  },
+  "fieldConfig": {
+    "defaults": {
+      "mappings": [
+        {
+          "options": {
+            "match": "null",
+            "result": {
+              "text": "N/A"
+            }
+          },
+          "type": "special"
+        }
+      ],
+      "decimals": 0,
+      "unit": "bytes"
+    },
+    "overrides": []
+  },
+  "description": "Total capacity of the ZFS pool",
+  "maxDataPoints": 100,
+  "type": "stat"
+}
