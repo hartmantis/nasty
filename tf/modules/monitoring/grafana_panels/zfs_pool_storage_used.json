@@ -1,0 +1,81 @@
+{
+  "datasource": {
+    "uid": "${datasource}",
+    "type": "prometheus"
+  },
+  "title": "ZPool Used",
+  "targets": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "editorMode": "code",
+      "exemplar": false,
+      "expr": "100 - ((node_filesystem_avail_bytes{node=\"$node\", mountpoint=\"/data\", fstype=\"zfs\"} * 100) / node_filesystem_size_bytes{node=\"$node\", mountpoint=\"/data\", fstype=\"zfs\"})",
+      "format": "time_series",
+      "instant": true,
+      "intervalFactor": 1,
+      "range": false,
+      "refId": "A",
+      "step": 240
+    }
+  ],
+  "options": {
+    "reduceOptions": {
+      "values": false,
+      "calcs": [
+        "lastNotNull"
+      ],
+      "fields": ""
+    },
+    "orientation": "auto",
+    "showThresholdLabels": false,
+    "showThresholdMarkers": true,
+    "sizing": "auto",
+    "minVizWidth": 75,
+    "minVizHeight": 75
+  },
+  "fieldConfig": {
+    "defaults": {
+      "mappings": [
+        {
+          "options": {
+            "match": "null",
+            "result": {
+              "text": "N/A"
+            }
+          },
+          "type": "special"
+        }
+      ],
+      "thresholds": {
+        "mode": "absolute",
+        "steps": [
+          {
+            "color": "rgba(50, 172, 45, 0.97)",
+            "value": null
+          },
+          {
+            "color": "rgba(237, 129, 40, 0.89)",
+            "value": 80
+          },
+          {
+            "color": "rgba(245, 54, 54, 0.9)",
+            "value": 90
+          }
+        ]
+      },
+      "color": {
+        "mode": "thresholds"
+      },
+      "decimals": 1,
+      "max": 100,
+      "min": 0,
+      "unit": "percent"
+    },
+    "overrides": []
+  },
+  "description": "ZFS pool storage usage",
+  "type": "gauge"
+}
