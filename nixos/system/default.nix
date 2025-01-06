@@ -12,7 +12,7 @@ in {
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.devNodes = "/dev/disk/by-partlabel";
   boot.zfs.extraPools = [ "data" ];
-  servies.zfs.autoScrub = {
+  services.zfs.autoScrub = {
     enable = false;
     interval = "*-01,04,07,10-01 07:00:00";
   };
@@ -76,7 +76,7 @@ in {
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       intel-media-driver
