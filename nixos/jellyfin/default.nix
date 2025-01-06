@@ -1,6 +1,9 @@
 {config, pkgs, ...}: let
   ports = import ../variables/ports.nix;
 in {
+  boot.kernel.sysctl."user.max_inotify_instances" = 256;
+  boot.kernel.sysctl."user.max_inotify_watches" = 503406;
+
   environment.systemPackages = with pkgs; [
     jellyfin
     jellyfin-web
