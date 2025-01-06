@@ -1,4 +1,5 @@
-{config, pkgs, ...}: let
+{config, pkgs, variables, ...}: let
+  vars = import variables;
   ports = import ../variables/ports.nix;
 in {
   boot.kernel.sysctl."user.max_inotify_instances" = 256;
@@ -21,7 +22,7 @@ in {
 
   services.traefik.dynamicConfigOptions.http.routers.jellyfin = {
     entryPoints = [ "https" ];
-    rule = "PathPrefix(`/`) && !PathPrefix(`/health`) && !PathPrefix(`/metrics`)";
+    rule = "(Host(`${vars.domain}`) || Host(`watch.${vars.domain}`)) && !PathPrefix(`/health`) && !PathPrefix(`/metrics`)";
     service = "jellyfin";
   };
 
