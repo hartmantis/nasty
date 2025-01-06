@@ -31,6 +31,7 @@
           ./system
           ./grafana
           ./jellyfin
+          ./navidrome
           ./traefik
         ];
 

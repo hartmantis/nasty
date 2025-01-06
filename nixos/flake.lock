@@ -123,8 +123,8 @@
     "variables": {
       "flake": false,
       "locked": {
-        "lastModified": 1711603999,
-        "narHash": "sha256-xEBzSCB5rwoM90xE1JNUSVw7ONbr3ZD5Zw1FHnBmFE0=",
+        "lastModified": 1736203626,
+        "narHash": "sha256-C4NRWGU+LkUUKueSUL4nZfq3hdhWKWNHfbk9vWGhH0U=",
         "path": "/etc/nixos/nasty-variables",
         "type": "path"
       },

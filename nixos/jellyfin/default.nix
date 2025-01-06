@@ -17,7 +17,7 @@ in {
   ];
 
   services.traefik.dynamicConfigOptions.http.services.jellyfin = {
-    loadBalancer.servers = [ { url = "http://127.0.0.1:${toString ports.jellyfin.web}"; } ];
+    loadBalancer.servers = [ { url = "http://127.0.0.1:${toString ports.jellyfin.http}"; } ];
   };
 
   services.traefik.dynamicConfigOptions.http.routers.jellyfin = {

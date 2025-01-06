@@ -1,6 +1,10 @@
 {
   jellyfin = {
-    web = 8096;
+    http = 8096;
+  };
+
+  navidrome = {
+    http = 4533;
   };
 
   traefik = {

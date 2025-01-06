@@ -8,7 +8,7 @@ in {
         {
           job_name = "jellyfin";
           static_configs = [
-            { targets = [ "localhost:${toString ports.jellyfin.web}" ]; }
+            { targets = [ "localhost:${toString ports.jellyfin.http}" ]; }
           ];
         }
       ];
