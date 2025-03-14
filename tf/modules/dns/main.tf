@@ -25,6 +25,15 @@ resource "porkbun_dns_record" "external_access" {
   notes   = "External access point"
 }
 
+resource "porkbun_dns_record" "root_txt" {
+  domain  = var.domain
+  name    = ""
+  type    = "TXT"
+  content = var.root_txt_record
+  ttl     = 600
+  notes   = "TXT record to prove domain ownership"
+}
+
 resource "porkbun_dns_record" "root_mx" {
   domain  = var.domain
   name    = ""
