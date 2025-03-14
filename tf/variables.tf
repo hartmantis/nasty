@@ -22,6 +22,10 @@ variable "outside_ip_address" {
   description = "Public IP that the external access hostname will point to"
   sensitive   = true
 }
+variable "root_txt_record" {
+  description = "The TXT record the domain's mail provider requires to prove ownership"
+  sensitive   = true
+}
 variable "mx_server" {
   description = "The mail server for the domain"
   sensitive   = true
