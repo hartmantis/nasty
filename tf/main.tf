@@ -10,7 +10,7 @@ module "dns" {
   outside_name    = var.outside_name
   outside_ip      = var.outside_ip_address
   root_txt_record = var.root_txt_record
-  mx_server       = var.mx_server
+  mx_servers      = var.mx_servers
 }
 
 module "monitoring" {

@@ -35,10 +35,12 @@ resource "porkbun_dns_record" "root_txt" {
 }
 
 resource "porkbun_dns_record" "root_mx" {
-  domain  = var.domain
-  name    = ""
-  type    = "MX"
-  content = var.mx_server
-  ttl     = 600
+  count    = length(var.mx_servers)
+  domain   = var.domain
+  name     = ""
+  type     = "MX"
+  content  = keys(var.mx_servers)[count.index]
+  prio     = values(var.mx_servers)[count.index]
+  ttl      = 600
   notes   = "Mail server for the domain"
 }
