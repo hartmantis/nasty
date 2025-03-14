@@ -7,17 +7,17 @@ terraform {
 
     grafana = {
       source  = "grafana/grafana"
-      version = "~> 2.12"
+      version = "~> 3.22"
     }
 
     discord = {
       source  = "Lucky3028/discord"
-      version = "~> 1.6"
+      version = "~> 2.0"
     }
 
     pagerduty = {
       source  = "PagerDuty/pagerduty"
-      version = "~> 3.6"
+      version = "~> 3.22"
     }
   }
 }
