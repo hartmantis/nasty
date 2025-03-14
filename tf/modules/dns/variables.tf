@@ -18,7 +18,8 @@ variable "root_txt_record" {
   description = "The TXT record the domain's mail provider requires to prove ownership"
   sensitive   = true
 }
-variable "mx_server" {
-  description = "The mail server for the domain"
+variable "mx_servers" {
+  description = "The mail server(s) and priorities for the domain"
+  type        = map(number)
   sensitive   = true
 }
