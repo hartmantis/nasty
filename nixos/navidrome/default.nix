@@ -17,7 +17,7 @@ in {
 
   services.traefik.dynamicConfigOptions.http.routers.navidrome = {
     entryPoints = [ "https" ];
-    rule = "Host(`listen.${vars.domain}`) !PathPrefix(`/metrics`)";
+    rule = "Host(`tunes.${vars.domain}`) && !PathPrefix(`/metrics`)";
     service = "navidrome";
   };
 

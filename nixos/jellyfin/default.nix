@@ -22,7 +22,7 @@ in {
 
   services.traefik.dynamicConfigOptions.http.routers.jellyfin = {
     entryPoints = [ "https" ];
-    rule = "(Host(`${vars.domain}`) || Host(`watch.${vars.domain}`)) && !PathPrefix(`/health`) && !PathPrefix(`/metrics`)";
+    rule = "(Host(`${vars.domain}`) || Host(`flicks.${vars.domain}`)) && !PathPrefix(`/health`) && !PathPrefix(`/metrics`)";
     service = "jellyfin";
   };
 
